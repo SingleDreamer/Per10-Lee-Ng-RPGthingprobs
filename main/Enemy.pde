@@ -3,4 +3,55 @@ public class Enemy extends Character{
    //should probably have some ai stuff here but that will probably be in the main 
    
    //variable for player location
+   private ArrayList<Tile> players;
+   private boolean isLow;
+   
+   public Enemy(){
+      Random raw = new Random();
+      attack = raw.nextInt(18) + 3;
+      defense = raw.nextInt(18) + 3;
+      speed = raw.nextInt(18) + 3;
+      health = raw.nextInt(20) + 30;
+      moverange = 3;
+      isLow = false;
+   }
+   
+   public getHealth(){ return health; }
+   public setHealth(int n){ health = health + n; }
+   public checkHealth(){
+      if (health < (health/2)){
+         isLow = true;
+      }
+   }
+   
+   
+   public getAttack(){ return attack; }
+   public setAttack(int n){ attack = n; }
+   
+   public getDefense(){ return defense; }
+   public setDefense(int n){ defense = n; }
+   
+   public getSpeed(){ return speed; }
+   
+   public getMoveRange(){ return moverange; }
+   
+   public resetCoords(ArrayList<Tile> tiles){
+      players = tiles;
+   }
+   
+   public void move(){
+      //if selected tile is in moverange and unoccupied, put player on selected tile
+      //otherwise it will fail
+      checkHealth();
+      //if isLow is true, then it will start to run away
+   }
+   
+   public void attack(Character other){
+      //change equations and add special attacks later
+      other.setHealth(-1 * (getAttack() - other.getDefense()));
+   }
+   
+   public void endturn(){
+      //end the turn
+   }
 }
