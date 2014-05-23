@@ -6,6 +6,7 @@ public interface Character{
    private int speed;
    private int moverange;
    private int health;
+   private int attackrange;
    
    public void move();
    public void attack(Character other);
