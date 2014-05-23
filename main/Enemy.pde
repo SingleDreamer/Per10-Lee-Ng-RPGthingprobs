@@ -13,6 +13,7 @@ public class Enemy extends Character{
       speed = raw.nextInt(18) + 3;
       health = raw.nextInt(20) + 30;
       moverange = 3;
+      attackrange = 1;
       isLow = false;
    }
    
@@ -47,6 +48,7 @@ public class Enemy extends Character{
    }
    
    public void attack(Character other){
+      //if (attackrange contains an enemy)
       //change equations and add special attacks later
       other.setHealth(-1 * (getAttack() - other.getDefense()));
    }
