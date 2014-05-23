@@ -7,7 +7,7 @@ public interface Character{
    private int moverange;
    private int health;
    
-   private void move();
-   private void attack();
-   private void endturn();
+   public void move();
+   public void attack(Character other);
+   public void endturn();
 }
