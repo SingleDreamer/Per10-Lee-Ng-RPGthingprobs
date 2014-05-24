@@ -32,8 +32,12 @@ void draw() {
   e.display();
   p.display();
   
-  p.move(current);
-  
+  if (mousePressed) {  
+    if (!(current.occupied())){
+      p.move(current);  
+    }
+  }
+ 
 }
 
 

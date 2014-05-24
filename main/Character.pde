@@ -24,7 +24,7 @@ public class Character{
    
    public int getMoveRange(){ return moverange; }
    
-   public void move(){
+   public void move(Tile target){
      
    }
    public void attack(Character other){

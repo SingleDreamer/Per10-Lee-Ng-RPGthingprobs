@@ -11,7 +11,7 @@ public class Tile{
    //private color tcolor = #FFFFFF;
    private boolean current;
    
-   private boolean occupied;
+   private boolean occupied = false;
    
    public Tile (float x, float y, float w, float h) {
       this.x = x;
@@ -33,7 +33,15 @@ public class Tile{
    }
    
    public void occupy() {
-      occupied = !(occupied);
+      occupied = true;
+   }
+   
+   public void deoccupy() {
+     occupied = false;
+   }
+   
+   public boolean occupied() {
+     return occupied;
    }
    
    public void changeOn() {
