@@ -9,6 +9,7 @@ public class Tile{
    private float w, h;
    private int c = 255;
    //private color tcolor = #FFFFFF;
+   private boolean current;
    
    private boolean occupied;
    
@@ -27,6 +28,10 @@ public class Tile{
       return y + (h/2);
    }
    
+   public boolean getCurrent() {
+      return current;
+   }
+   
    public void occupy() {
       occupied = !(occupied);
    }
@@ -41,13 +46,15 @@ public class Tile{
    
    public void display () {
      if (((mouseX >= x) && (mouseX <= x+w)) && ((mouseY >= y) && (mouseY <= y+h))) {
-        this.changeOn();
+       this.changeOn();
+       current = true;
      }
      /*else if (occupied) {
          this.changeOn();
      }*/
      else {
        this.changeOff();
+       current = false;
      }
      
      stroke (0);

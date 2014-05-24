@@ -23,9 +23,10 @@ public class Player extends Character {
 
 
 
-  public void move() {
+  public void move (Tile target) {
     //if selected tile is in moverange and unoccupied, put player on selected tile
     //otherwise it will fail
+    location = target;
   }
 
   public void attack(Character other) {
