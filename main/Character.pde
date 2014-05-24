@@ -1,8 +1,5 @@
 public class Character{
-<<<<<<< HEAD:Character.pde
    //interface character, extend it into player and enemy
-=======
->>>>>>> FETCH_HEAD:main/Character.pde
    //should have stats and generic functions 
    
    private int attack;
