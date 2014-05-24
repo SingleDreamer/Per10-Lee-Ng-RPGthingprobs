@@ -7,7 +7,8 @@ public class Enemy extends Character{
    private boolean isLow;
    
    public Enemy(){
-      Random raw = new Random();
+      //processing has a random function
+      //Random raw = new Random();
       attack = raw.nextInt(18) + 3;
       defense = raw.nextInt(18) + 3;
       speed = raw.nextInt(18) + 3;

@@ -5,7 +5,7 @@ public class Tile{
    
    private float x, y;
    private float w, h;
-   private int color = 255;
+   private int c = 255;
    
    private boolean occupied;
    
@@ -28,18 +28,25 @@ public class Tile{
       occupied = !(occupied);
    }
    
-   public void changeColor() {
-      if (color = 255) {
-         color = 0;
-      }
-      else {
-         color = 255;
-      }
+   public void changeOn() {
+     c = 0;
+   }
+   
+   public void changeOff() {
+     c = 255;
    }
    
    public void display () {
-      fill (color);
-      rect (x, y, w, h);
+     if ((mouseX >= x) && (mouseY >= y)) {
+        this.changeOn();
+     }
+     else {
+       this.changeOff();
+     }
+     
+     stroke (0);
+     fill (c);
+     rect (x, y, w, h);
    }
       
    

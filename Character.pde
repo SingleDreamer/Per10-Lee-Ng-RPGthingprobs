@@ -1,6 +1,7 @@
-public interface Character{
+public class Character{
    //interface character, extend it into player and enemy
    //should have stats and generic functions 
+   
    private int attack;
    private int defense;
    private int speed;
