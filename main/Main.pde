@@ -9,7 +9,7 @@ void setup() {
   map = new Tile [cols][rows];
   for (int i = 0; i < cols; i++) {    
     for (int j = 0; j < rows; j++) {
-      map[i][j] = new Tile(i*20,j*20,20,20);
+      map[i][j] = new Tile(i*100,j*100,100,100);
     }
   }
   
