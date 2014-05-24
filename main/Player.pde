@@ -1,5 +1,12 @@
+import java.util.*;
 public class Player extends Character{
    //should contain player specific functions 
+   private int attack;
+   private int defense;
+   private int speed;
+   private int moverange;
+   private int health;
+   private int attackrange;
    
    public Player(){
       Random raw = new Random();
@@ -11,18 +18,6 @@ public class Player extends Character{
       attackrange = 1;
    }
    
-   public getHealth(){ return health; }
-   public setHealth(int n){ health = health + n; }
-   
-   public getAttack(){ return attack; }
-   public setAttack(int n){ attack = n; }
-   
-   public getDefense(){ return defense; }
-   public setDefense(int n){ defense = n; }
-   
-   public getSpeed(){ return speed; }
-   
-   public getMoveRange(){ return moverange; }
    
    
    public void move(){

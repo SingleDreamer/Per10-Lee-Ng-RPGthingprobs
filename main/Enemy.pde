@@ -1,3 +1,4 @@
+import java.util.*;
 public class Enemy extends Character{
    //contains enemy specific stats and functions
    //should probably have some ai stuff here but that will probably be in the main 
@@ -5,6 +6,12 @@ public class Enemy extends Character{
    //variable for player location
    private ArrayList<Tile> players;
    private boolean isLow;
+   private int attack;
+   private int defense;
+   private int speed;
+   private int moverange;
+   private int health;
+   private int attackrange;
    
    public Enemy(){
       Random raw = new Random();
@@ -17,26 +24,13 @@ public class Enemy extends Character{
       isLow = false;
    }
    
-   public getHealth(){ return health; }
-   public setHealth(int n){ health = health + n; }
-   public checkHealth(){
+   public void checkHealth(){
       if (health < (health/2)){
          isLow = true;
       }
    }
    
-   
-   public getAttack(){ return attack; }
-   public setAttack(int n){ attack = n; }
-   
-   public getDefense(){ return defense; }
-   public setDefense(int n){ defense = n; }
-   
-   public getSpeed(){ return speed; }
-   
-   public getMoveRange(){ return moverange; }
-   
-   public resetCoords(ArrayList<Tile> tiles){
+   public void resetCoords(ArrayList<Tile> tiles){
       players = tiles;
    }
    
