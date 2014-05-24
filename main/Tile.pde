@@ -1,3 +1,4 @@
+import java.util.*;
 public class Tile{
    //this will be the tile class that characters can move around in
    //the grid is a 2d array of tiles
@@ -5,7 +6,11 @@ public class Tile{
    
    private float x, y;
    private float w, h;
+<<<<<<< HEAD
    private int c = 255;
+=======
+   private color tcolor = #FFFFFF;
+>>>>>>> FETCH_HEAD
    
    private boolean occupied;
    
@@ -28,6 +33,7 @@ public class Tile{
       occupied = !(occupied);
    }
    
+<<<<<<< HEAD
    public void changeOn() {
      c = 0;
    }
@@ -47,6 +53,20 @@ public class Tile{
      stroke (0);
      fill (c);
      rect (x, y, w, h);
+=======
+   public void changeColor() {
+      if (tcolor == #FFFFFF) {
+         tcolor = #000000;
+      }
+      else {
+         tcolor = #FFFFFF;
+      }
+   }
+   
+   public void display () {
+      fill (tcolor);
+      rect (x, y, w, h);
+>>>>>>> FETCH_HEAD
    }
       
    
