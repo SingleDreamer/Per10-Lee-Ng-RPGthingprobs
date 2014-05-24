@@ -5,6 +5,7 @@ public class Enemy extends Character{
    
    //variable for player location
    private ArrayList<Tile> players;
+   
    private boolean isLow;
    private int attack;
    private int defense;
@@ -12,6 +13,8 @@ public class Enemy extends Character{
    private int moverange;
    private int health;
    private int attackrange;
+   
+   private Tile location;
    
    public Enemy(){
       Random raw = new Random();

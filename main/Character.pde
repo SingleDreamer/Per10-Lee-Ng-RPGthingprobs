@@ -9,6 +9,8 @@ public class Character{
    private int health;
    private int attackrange;
    
+   private Tile location;
+   
    public int getHealth(){ return health; }
    public void setHealth(int n){ health = health + n; }
    

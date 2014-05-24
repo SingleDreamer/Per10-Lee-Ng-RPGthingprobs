@@ -8,6 +8,8 @@ public class Player extends Character{
    private int health;
    private int attackrange;
    
+   private Tile location;
+   
    public Player(){
       Random raw = new Random();
       attack = raw.nextInt(18) + 3;
