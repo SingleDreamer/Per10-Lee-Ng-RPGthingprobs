@@ -33,4 +33,7 @@ public class Character{
    public void endturn(){
      
    }
+   
+   public void display() {
+   }
 }

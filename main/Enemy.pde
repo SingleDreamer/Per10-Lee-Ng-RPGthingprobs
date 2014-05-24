@@ -25,6 +25,7 @@ public class Enemy extends Character{
       moverange = 3;
       attackrange = 1;
       isLow = false;
+      location = map[0][0];
    }
    
    public void checkHealth(){
@@ -52,5 +53,11 @@ public class Enemy extends Character{
    
    public void endturn(){
       //end the turn
+   }
+   
+   public void display () {
+     fill (255, 0, 0);
+     ellipse (location.getX(), location.getY(), 10, 10);
+     location.occupy();
    }
 }

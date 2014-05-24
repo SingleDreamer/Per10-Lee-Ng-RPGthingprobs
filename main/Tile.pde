@@ -1,4 +1,5 @@
 import java.util.*;
+
 public class Tile{
    //this will be the tile class that characters can move around in
    //the grid is a 2d array of tiles
@@ -19,11 +20,11 @@ public class Tile{
    }
    
    public float getX() {
-      return x;
+      return x + (w/2);
    }
    
    public float getY() {
-      return y;
+      return y + (h/2);
    }
    
    public void occupy() {
@@ -39,9 +40,12 @@ public class Tile{
    }
    
    public void display () {
-     if (((mouseX >= x) && (mouseX <= x+h)) && ((mouseY >= y) && (mouseY <= y+w))) {
+     if (((mouseX >= x) && (mouseX <= x+w)) && ((mouseY >= y) && (mouseY <= y+h))) {
         this.changeOn();
      }
+     /*else if (occupied) {
+         this.changeOn();
+     }*/
      else {
        this.changeOff();
      }
