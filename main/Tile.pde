@@ -39,7 +39,7 @@ public class Tile{
    }
    
    public void display () {
-     if ((mouseX >= x) && (mouseY >= y)) {
+     if (((mouseX >= x) && (mouseX <= x+20)) && ((mouseY >= y) && (mouseY <= y+20))) {
         this.changeOn();
      }
      else {
