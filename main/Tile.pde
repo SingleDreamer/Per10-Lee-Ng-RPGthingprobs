@@ -6,11 +6,8 @@ public class Tile{
    
    private float x, y;
    private float w, h;
-<<<<<<< HEAD
    private int c = 255;
-=======
-   private color tcolor = #FFFFFF;
->>>>>>> FETCH_HEAD
+   //private color tcolor = #FFFFFF;
    
    private boolean occupied;
    
@@ -33,7 +30,6 @@ public class Tile{
       occupied = !(occupied);
    }
    
-<<<<<<< HEAD
    public void changeOn() {
      c = 0;
    }
@@ -53,8 +49,10 @@ public class Tile{
      stroke (0);
      fill (c);
      rect (x, y, w, h);
-=======
-   public void changeColor() {
+   }
+   
+}
+   /*public void changeColor() {
       if (tcolor == #FFFFFF) {
          tcolor = #000000;
       }
@@ -66,10 +64,11 @@ public class Tile{
    public void display () {
       fill (tcolor);
       rect (x, y, w, h);
->>>>>>> FETCH_HEAD
-   }
+   }*/
+   
+ 
       
    
    
    
-}
+

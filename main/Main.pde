@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 private Tile[][] map;
 private int cols = 5;
 private int rows = 5;
@@ -18,15 +17,6 @@ void draw() {
     for (int j = 0; j < rows; j++) {
       map[i][j].display();
     }
-=======
-import java.util.*;
-public class Main{
-  
-  void setup() {
-  }
-  
-  void draw() {
->>>>>>> FETCH_HEAD
   }
 }
 

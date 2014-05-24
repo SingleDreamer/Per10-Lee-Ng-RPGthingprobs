@@ -14,8 +14,7 @@ public class Enemy extends Character{
    private int attackrange;
    
    public Enemy(){
-      //processing has a random function
-      //Random raw = new Random();
+      Random raw = new Random();
       attack = raw.nextInt(18) + 3;
       defense = raw.nextInt(18) + 3;
       speed = raw.nextInt(18) + 3;
