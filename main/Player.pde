@@ -1,27 +1,26 @@
 import java.util.*;
 public class Player extends Character {
   //should contain player specific functions 
+  private boolean isLow;
   private int attack;
   private int defense;
   private int speed;
   private int moverange;
   private int health;
   private int attackrange;
+  private String name;
 
   private Tile location;
 
   public Player() {
-    Random raw = new Random();
-    attack = raw.nextInt(18) + 3;
-    defense = raw.nextInt(18) + 3;
-    speed = raw.nextInt(18) + 3;
-    health = raw.nextInt(20) + 30;
-    moverange = 3;
-    attackrange = 1;
-    location = map [4][4];
+    super();
+    location = map [4][4]; 
   }
 
-
+  public Player(String s){
+   super(s);
+   location = map [4][4]; 
+  }
 
   public void move (Tile target) {
     //if selected tile is in moverange and unoccupied, put player on selected tile

@@ -52,6 +52,10 @@ public class Tile{
      c = 255;
    }
    
+   public boolean isHover(){
+      return  (((mouseX >= x) && (mouseX <= x+w)) && ((mouseY >= y) && (mouseY <= y+h)));
+   }
+   
    public void display () {
      if (((mouseX >= x) && (mouseX <= x+w)) && ((mouseY >= y) && (mouseY <= y+h))) {
        this.changeOn();

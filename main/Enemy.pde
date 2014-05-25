@@ -13,18 +13,17 @@ public class Enemy extends Character{
    private int moverange;
    private int health;
    private int attackrange;
+   private String name;
    
    private Tile location;
    
    public Enemy(){
-      Random raw = new Random();
-      attack = raw.nextInt(18) + 3;
-      defense = raw.nextInt(18) + 3;
-      speed = raw.nextInt(18) + 3;
-      health = raw.nextInt(20) + 30;
-      moverange = 3;
-      attackrange = 1;
-      isLow = false;
+      super();
+      location = map [0][0];
+   }
+   
+   public Enemy(String s){
+      super(s); 
       location = map[0][0];
    }
    

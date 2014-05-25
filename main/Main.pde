@@ -2,6 +2,7 @@ private Tile[][] map;
 private Tile current;
 private int cols = 5;
 private int rows = 5;
+private PFont f;
 
 private Character e, p;
 
@@ -14,8 +15,10 @@ void setup() {
     }
   }
   
-  e = new Enemy();
-  p = new Player();
+  e = new Enemy("Enemy");
+  p = new Player("Player");
+  
+  f = createFont("Arial",16,false);
   
 }
 
@@ -31,6 +34,13 @@ void draw() {
   
   e.display();
   p.display();
+  
+  if (e.checkHover()){
+   e.drawStats(f, 370, 25); 
+  }
+  if (p.checkHover()){
+   p.drawStats(f, 270, 25); 
+  }
   
   if (mousePressed) {  
     if (!(current.occupied())){
