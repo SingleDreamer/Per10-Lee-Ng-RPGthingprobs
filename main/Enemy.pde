@@ -16,6 +16,7 @@ public class Enemy extends Character{
    private String name;
    
    private Tile location;
+  
    
    public Enemy(){
       super();
@@ -25,7 +26,10 @@ public class Enemy extends Character{
    public Enemy(String s){
       super(s); 
       location = map[0][0];
-   }
+   }      
+ 
+   public void setLocation(int x, int y){ location = map[x][y]; }
+
    
    public void checkHealth(){
       if (health < (health/2)){

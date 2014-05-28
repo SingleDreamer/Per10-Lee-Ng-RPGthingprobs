@@ -20,7 +20,10 @@ public class Player extends Character {
   public Player(String s){
    super(s);
    location = map [4][4]; 
-  }
+  }   
+
+  public void setLocation(int x, int y){ location = map[x][y]; }
+
 
   public void move (Tile target) {
     //if selected tile is in moverange and unoccupied, put player on selected tile
