@@ -4,7 +4,8 @@ private int cols = 5;
 private int rows = 5;
 private PFont f;
 
-private Character e, p;
+private Character[] enemies;
+private Character[] players;
 
 void setup() {
   size (500, 500);
@@ -15,8 +16,15 @@ void setup() {
     }
   }
   
-  e = new Enemy("Enemy");
-  p = new Player("Player");
+  enemies = new Character[3];
+  players = new Character[3];
+  
+  for (int i = 0; i < 3; i++){
+    enemies[i] = new Enemy();
+    enemies[i].setLocation(0,i);
+    players[i] = new Player(); 
+    players[i].setLocation(4,i);
+  }
   
   f = createFont("Arial",16,false);
   
@@ -32,19 +40,16 @@ void draw() {
     }
   }
   
-  e.display();
-  p.display();
-  
-  if (e.checkHover()){
-   e.drawStats(f, 370, 25); 
-  }
-  if (p.checkHover()){
-   p.drawStats(f, 270, 25); 
+  for (int i = 0; i < enemies.length; i++){
+    enemies[i].display();
+    enemies[i].drawStats(f, 370, 25);
+    players[i].display();
+    players[i].drawStats(f, 270, 25);
   }
   
   if (mousePressed) {  
     if (!(current.occupied())){
-      p.move(current);  
+      players[0].move(current);  
     }
   }
  
@@ -52,4 +57,3 @@ void draw() {
 
 
   //gamestuff, not in proper location
-

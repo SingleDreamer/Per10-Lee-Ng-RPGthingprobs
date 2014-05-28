@@ -53,6 +53,9 @@ public class Character{
    
    public int getMoveRange(){ return moverange; }
    
+   public Tile getLocation(){ return location; }
+   public void setLocation(int x, int y){ location = map[x][y]; }
+   
    public boolean checkHover(){
     return location.isHover(); 
    }
