@@ -1,4 +1,4 @@
-public class Character{
+public class Character implements Comparable<Character>{
    //interface character, extend it into player and enemy
    //should have stats and generic functions 
    private boolean isLow;
@@ -9,6 +9,7 @@ public class Character{
    private int health;
    private int attackrange;
    private String name;
+   private boolean selected;
    
    private Tile location;
    
@@ -23,6 +24,7 @@ public class Character{
       isLow = false;
       location = map[0][0];
       name = "Generic dude";
+      selected = false;
    }
    
    public Character(String s){
@@ -36,6 +38,7 @@ public class Character{
       isLow = false;
       location = map[0][0];
       name = s;
+      selected = false;
    }
    
    public String getName(){ return name; }
@@ -57,9 +60,7 @@ public class Character{
    
    public void setLocation(int x, int y){ location = map[x][y]; }
    
-   public boolean checkHover(){
-    return location.isHover(); 
-   }
+   public void changeSelect(){ selected = !selected; }
    
    public void drawStats(PFont f, int x, int y){
     textFont(f,16);
@@ -71,6 +72,10 @@ public class Character{
     s += "Defense: " + getDefense() + "\n";
     text(s, x, y);
   }
+   
+   public int compareTo(Character other){
+    return this.speed - other.getSpeed(); 
+   }
    
    public void move(Tile target){
      
