@@ -7,19 +7,22 @@ public class Button {
   PFont f;
   
   public Button (String s, int setx, int sety) {
-    text = s;
+    t = s;
     x = setx;
     y = sety;
     c = 255;
     f = createFont("Arial",16,false);
   }
   
-  public display (){
+  public void display (){
     textFont(f,16);
     fill(0);
     text (t, x, y);
     fill(c);
     rect (x, y, 50, 20);
+  }
+  
+  public void highlight () {
   }
   
   

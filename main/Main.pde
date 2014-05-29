@@ -37,6 +37,12 @@ void setup() {
   
   f = createFont("Arial",16,false);
   
+  for (Character i : turnOrder) {
+    print (i + "\n");
+  }
+  print ("\n");
+  print (currentChar);
+  
 }
 
 void draw() {
@@ -48,6 +54,7 @@ void draw() {
       }
     }
   }
+  
   
   for (int i = 0; i < enemies.length; i++){
     enemies[i].display();

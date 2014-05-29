@@ -30,6 +30,8 @@ public class Player extends Character {
     //otherwise it will fail
     location.deoccupy();
     location = target;
+    location.occupy();
+
   }
 
   public void attack(Character other) {
@@ -45,7 +47,6 @@ public class Player extends Character {
   public void display() {
     fill (0, 255, 0);
     ellipse (location.getX(), location.getY(), 10, 10);
-    location.occupy();
   }
 }
 

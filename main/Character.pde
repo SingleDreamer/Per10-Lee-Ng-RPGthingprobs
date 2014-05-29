@@ -89,4 +89,8 @@ public class Character implements Comparable<Character>{
    
    public void display() {
    }
+   
+   public String toString() {
+     return name;
+   }
 }

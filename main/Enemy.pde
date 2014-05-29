@@ -46,6 +46,9 @@ public class Enemy extends Character{
       //otherwise it will fail
       checkHealth();
       //if isLow is true, then it will start to run away
+      location.deoccupy();
+      location = target;
+      location.occupy();
    }
    
    public void attack(Character other){
