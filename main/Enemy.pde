@@ -28,7 +28,10 @@ public class Enemy extends Character{
       location = map[0][0];
    }      
  
-   public void setLocation(int x, int y){ location = map[x][y]; }
+   public void setLocation(int x, int y){
+     location = map[x][y]; 
+     location.occupy();
+   }
 
    
    public void checkHealth(){
@@ -64,6 +67,5 @@ public class Enemy extends Character{
    public void display () {
      fill (255, 0, 0);
      ellipse (location.getX(), location.getY(), 10, 10);
-     location.occupy();
    }
 }

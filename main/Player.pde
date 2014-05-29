@@ -22,7 +22,10 @@ public class Player extends Character {
    location = map [4][4]; 
   }   
 
-  public void setLocation(int x, int y){ location = map[x][y]; }
+  public void setLocation(int x, int y){ 
+    location = map[x][y]; 
+    location.occupy();
+  }
 
 
   public void move (Tile target) {

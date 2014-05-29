@@ -58,7 +58,10 @@ public class Character implements Comparable<Character>{
    
    public Tile getLocation(){ return location; }
    
-   public void setLocation(int x, int y){ location = map[x][y]; }
+   public void setLocation(int x, int y) { 
+     location = map[x][y]; 
+     location.occupy();
+   }
    
    public void changeSelect(){ selected = !selected; }
    
