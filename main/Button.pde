@@ -18,6 +18,8 @@ public class Button {
     textFont(f,16);
     fill(0);
     text (t, x, y);
+    fill(c);
+    rect (x, y, 50, 20);
   }
   
   
