@@ -1,5 +1,7 @@
 Per10-Lee-Ng-RPGthingprobs
 =======================
+MAKE ALL CHANGES IN CAPITAL 'M' MAIN FOLDER
+
 This will probably be an RPG thing. 
 
 -----
