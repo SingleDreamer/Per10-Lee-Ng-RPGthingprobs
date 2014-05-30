@@ -3,8 +3,8 @@
 //board
 private Tile[][] map;
 private Tile current;
-private int cols = 5;
-private int rows = 5;
+private int cols = 15;
+private int rows = 15;
 private int n;
 private PFont f;
 
@@ -19,10 +19,11 @@ void setup() {
   
   //board
   size (500, 500);
+  background(255);
   map = new Tile [cols][rows];
   for (int i = 0; i < cols; i++) {    
     for (int j = 0; j < rows; j++) {
-      map[i][j] = new Tile(i*50,j*50,50,50);
+      map[i][j] = new Tile(i*25,j*25,25,25);
     }
   }
   
@@ -81,8 +82,13 @@ void draw() {
   if (mousePressed) {  
     if (!(current.occupied())){
       currentChar.move(current); 
-      n = n + 1;
-      currentChar = turnOrder(n);
+      if (n == turnOrder.size() - 1) {
+        n = 0;
+      }
+      else {
+        n = n + 1;
+      }
+      currentChar = turnOrder.get(n);
     }
   }
  
