@@ -39,7 +39,7 @@ void setup() {
     enemies[i].setLocation(i,0);
     turnOrder.add(enemies[i]);
     players[i] = new Player("Player"+(i+1)); 
-    players[i].setLocation(i,4);
+    players[i].setLocation(14-i,14);
     turnOrder.add(players[i]);
   }
   
@@ -49,7 +49,7 @@ void setup() {
   f = createFont("Arial",16,false);
   
   for (Character i : turnOrder) {
-    print (i + "\n");
+    print (i.getName() + " " + i.getSpeed() + "\n");
   }
   print ("\n");
   print (currentChar);
