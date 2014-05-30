@@ -5,6 +5,7 @@ private Tile[][] map;
 private Tile current;
 private int cols = 5;
 private int rows = 5;
+private int n;
 private PFont f;
 
 //characters
@@ -42,7 +43,7 @@ void setup() {
   }
   
   Collections.sort(turnOrder);
-  currentChar = turnOrder.get(0);
+  currentChar = turnOrder.get(n);
   
   f = createFont("Arial",16,false);
   
@@ -79,7 +80,9 @@ void draw() {
   //movement
   if (mousePressed) {  
     if (!(current.occupied())){
-      currentChar.move(current);  
+      currentChar.move(current); 
+      n = n + 1;
+      currentChar = turnOrder(n);
     }
   }
  
