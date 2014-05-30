@@ -1,15 +1,22 @@
+//VARS
+
+//board
 private Tile[][] map;
 private Tile current;
 private int cols = 5;
 private int rows = 5;
 private PFont f;
 
+//characters
 private Character[] enemies;
 private Character[] players;
 private Character currentChar;
 private ArrayList<Character> turnOrder;
 
+//SETUP
 void setup() {
+  
+  //board
   size (500, 500);
   map = new Tile [cols][rows];
   for (int i = 0; i < cols; i++) {    
@@ -18,9 +25,11 @@ void setup() {
     }
   }
   
+  //characters
   enemies = new Character[3];
   players = new Character[3];
   
+  //turnorder
   turnOrder = new ArrayList<Character>();
   
   for (int i = 0; i < 3; i++){
@@ -45,7 +54,11 @@ void setup() {
   
 }
 
+
+//DRAW
 void draw() {
+  
+  //board
   for (int i = 0; i < cols; i++) {
     for (int j = 0; j < rows; j++) {
       map[i][j].display();
@@ -55,7 +68,7 @@ void draw() {
     }
   }
   
-  
+  //characters
   for (int i = 0; i < enemies.length; i++){
     enemies[i].display();
     enemies[i].drawStats(f, 370, 25+i*100);
@@ -63,7 +76,7 @@ void draw() {
     players[i].drawStats(f, 270, 25+i*100);
   }
   
-  
+  //movement
   if (mousePressed) {  
     if (!(current.occupied())){
       currentChar.move(current);  
@@ -73,4 +86,5 @@ void draw() {
 }
 
 
-  //gamestuff, not in proper location
+//gamestuff, not in proper location
+//??????
