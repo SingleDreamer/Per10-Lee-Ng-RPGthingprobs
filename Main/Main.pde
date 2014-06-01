@@ -8,6 +8,7 @@ private int rows = 15;
 private int n;
 private PFont f;
 private Button b;
+private boolean active;
 
 //characters
 private Character[] enemies;
@@ -29,6 +30,7 @@ void setup() {
   }
   //button
   b = new Button (400, 400);
+  active = false;
   
   //characters
   enemies = new Character[3];
@@ -72,12 +74,7 @@ void draw() {
       }
     }
   }
-  //button
-  b.display();
-  if (b.pressedOn()){
-    print ("yay");
-  }
-  //may do multiple times, make a 'move open' var to keep it once
+  
   
   //characters
   for (int i = 0; i < enemies.length; i++){
@@ -88,18 +85,31 @@ void draw() {
   }
   
   //movement
-  if (mousePressed) {  
-    if (!(current.occupied())){
-      currentChar.move(current); 
-      if (n == turnOrder.size() - 1) {
-        n = 0;
+  if (active){
+    if (mousePressed) {  
+      if (current.getCurrent()){
+        if (!(current.occupied())){  
+          currentChar.move(current);
+          active = false;
+          if (n == turnOrder.size() - 1) {
+            n = 0;
+          }
+          else {
+            n = n + 1;
+          }
+          currentChar = turnOrder.get(n);
+        }
       }
-      else {
-        n = n + 1;
-      }
-      currentChar = turnOrder.get(n);
     }
   }
+  
+  //button
+  b.display();
+  if (b.pressedOn()){
+    print ("yay");
+    active = true;
+  }
+  //may do multiple times, make a 'move open' var to keep it once
  
 }
 
