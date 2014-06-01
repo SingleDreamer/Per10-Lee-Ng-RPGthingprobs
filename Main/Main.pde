@@ -75,6 +75,13 @@ void draw() {
     }
   }
   
+  //button
+  b.display();
+  if (b.pressedOn()){
+    print ("yay");
+    active = true;
+  }
+  //may do multiple times, make a 'move open' var to keep it once
   
   //characters
   for (int i = 0; i < enemies.length; i++){
@@ -103,13 +110,6 @@ void draw() {
     }
   }
   
-  //button
-  b.display();
-  if (b.pressedOn()){
-    print ("yay");
-    active = true;
-  }
-  //may do multiple times, make a 'move open' var to keep it once
  
 }
 
