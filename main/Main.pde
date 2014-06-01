@@ -7,6 +7,7 @@ private int cols = 15;
 private int rows = 15;
 private int n;
 private PFont f;
+private Button b;
 
 //characters
 private Character[] enemies;
@@ -26,6 +27,8 @@ void setup() {
       map[i][j] = new Tile(i*25,j*25,25,25);
     }
   }
+  //button
+  b = new Button (400, 400);
   
   //characters
   enemies = new Character[3];
@@ -69,6 +72,12 @@ void draw() {
       }
     }
   }
+  //button
+  b.display();
+  if (b.pressedOn()){
+    print ("yay");
+  }
+  //may do multiple times, make a 'move open' var to keep it once
   
   //characters
   for (int i = 0; i < enemies.length; i++){
