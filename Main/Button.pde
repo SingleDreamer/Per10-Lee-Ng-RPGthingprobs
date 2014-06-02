@@ -5,21 +5,23 @@ public class Button {
   int y;
   int c;
   PFont f;
+  boolean pressed;
   
-  public Button (/*String s,*/ int setx, int sety) {
-    //t = s;
+  public Button (String s, int setx, int sety) {
+    t = s;
     x = setx;
     y = sety;
     c = color(113, 234, 163);
+    pressed = false;
     //f = createFont("Arial",16,false);
   }
   
-  public void display (){
-    //textFont(f,16);
-    //fill(0);
-    //text (t, x, y);
+  public void display (PFont f){
+    rect (x, y, 60, 20);
+    textFont(f,12);
+    fill(0);
+    text (t, x+7, y+15);
     fill(c);
-    rect (x, y, 50, 20);
   }
   
   public void highlight () {

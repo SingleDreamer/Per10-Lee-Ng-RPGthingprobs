@@ -7,8 +7,9 @@ private int cols = 15;
 private int rows = 15;
 private int n;
 private PFont f;
-private Button b;
-private boolean active;
+private Button move;
+private Button attack;
+private Button endTurn;
 
 //characters
 private Character[] enemies;
@@ -20,7 +21,7 @@ private ArrayList<Character> turnOrder;
 void setup() {
   
   //board
-  size (500, 500);
+  size (700, 500);
   background(255);
   map = new Tile [cols][rows];
   for (int i = 0; i < cols; i++) {    
@@ -29,8 +30,11 @@ void setup() {
     }
   }
   //button
-  b = new Button (400, 400);
-  active = false;
+  move = new Button ("Move",420, 360);
+  attack = new Button("Attack",520, 360);
+  attack.c = color(200, 0, 0);
+  endTurn = new Button("End Turn",620, 360);
+  endTurn.c = color(150, 150, 150);
   
   //characters
   enemies = new Character[3];
@@ -76,28 +80,51 @@ void draw() {
   }
   
   //button
-  b.display();
-  if (b.pressedOn()){
-    print ("yay");
-    active = true;
+  move.display(f);
+  if (move.pressedOn()){
+    print ("move"+currentChar.getName());
+    move.pressed = true;
+  }
+  attack.display(f);
+  if (attack.pressedOn()){
+    print ("attack");
+    attack.pressed = true;
+  } 
+  endTurn.display(f);
+  if (endTurn.pressedOn()){
+    print ("endTurn");
+    endTurn.pressed = true;
   }
   //may do multiple times, make a 'move open' var to keep it once
   
   //characters
   for (int i = 0; i < enemies.length; i++){
     enemies[i].display();
-    enemies[i].drawStats(f, 370, 25+i*100);
+    enemies[i].drawStats(f, 600, 25+i*100);
     players[i].display();
-    players[i].drawStats(f, 270, 25+i*100);
+    players[i].drawStats(f, 400, 25+i*100);
   }
   
   //movement
-  if (active){
-    if (mousePressed) {  
+  if (move.pressed == true){
+    moveAction();
+  }
+  if (endTurn.pressed == true){
+    endTurnAction(); 
+  }
+ 
+}
+
+
+//gamestuff, not in proper location
+//??????
+
+public void moveAction(){
+ if (mousePressed) {  
       if (current.getCurrent()){
         if (!(current.occupied())){  
           currentChar.move(current);
-          active = false;
+          move.pressed = false;
           if (n == turnOrder.size() - 1) {
             n = 0;
           }
@@ -107,12 +134,17 @@ void draw() {
           currentChar = turnOrder.get(n);
         }
       }
-    }
-  }
-  
- 
+    } 
 }
 
-
-//gamestuff, not in proper location
-//??????
+public void endTurnAction(){
+ if (mousePressed) {
+   endTurn.pressed = false;
+   if (n == turnOrder.size() - 1){
+     n = 0;
+   } else{
+     n = n + 1; 
+   }
+   currentChar = turnOrder.get(n);
+ }
+}

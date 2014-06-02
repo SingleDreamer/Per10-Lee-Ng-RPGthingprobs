@@ -77,7 +77,7 @@ public class Character implements Comparable<Character>{
   }
    
    public int compareTo(Character other){
-    return this.speed - other.getSpeed(); 
+    return other.getSpeed() - this.getSpeed(); 
    }
    
    public void move(Tile target){
