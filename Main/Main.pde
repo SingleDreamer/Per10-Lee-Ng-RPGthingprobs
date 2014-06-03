@@ -10,6 +10,7 @@ private PFont f;
 private Button move;
 private Button attack;
 private Button endTurn;
+private ArrayList<Tile> links;
 
 //characters
 private Character[] enemies;
@@ -29,6 +30,8 @@ void setup() {
       map[i][j] = new Tile(i*25,j*25,25,25);
     }
   }
+  links = new ArrayList <Tile> ();
+
   //button
   move = new Button ("Move",420, 360);
   attack = new Button("Attack",520, 360);
@@ -78,6 +81,10 @@ void draw() {
       }
     }
   }
+  for (Tile a : links) {
+    a.linkify();
+    print (a);
+  }
   
   //button
   move.display(f);
@@ -91,6 +98,13 @@ void draw() {
     enemies[i].drawStats(f, 600, 25+i*100);
     players[i].display();
     players[i].drawStats(f, 400, 25+i*100);
+  }
+  
+  //moving
+  if (move.pressed){  
+   if (current.getCurrent() && !(current.occupied())){   
+     links.add(current);
+    }
   }
   
  
@@ -113,12 +127,19 @@ void mousePressed(){
   if (move.overButton()){
    move.locked = true;
    move.pressed = true;
-   print("move"+currentChar.getName());
+   print("move"+currentChar.getName());        
+   links.add(current);
+
   }else{
    move.locked = false; 
   }
   if (move.pressed == true){
     moveAction();
+    for (Tile a : links) {
+      a.delinkify();
+      print (a);
+    }
+    links.clear();
   }
   //attackbutton
   if (attack.overButton()){
