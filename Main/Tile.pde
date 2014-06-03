@@ -10,7 +10,7 @@ public class Tile{
    private float w, h;
    
    //color
-   private int c = 255;
+   private int c = color (63, 191, 95);
    //private color tcolor = #FFFFFF;
    
    //states
@@ -54,10 +54,10 @@ public class Tile{
    
    //color
    public void changeOn() {
-     c = 0;
+     c = color (12, 232, 67);
    }
    public void changeOff() {
-     c = 255;
+     c = color (63, 191, 95);
    }
    /*public void changeColor() {
 if (tcolor == #FFFFFF) {
@@ -83,7 +83,7 @@ this.changeOn();
        this.changeOff();
        current = false;
      }
-     stroke (0);
+     stroke (color(32, 135, 58));
      fill (c);
      rect (x, y, w, h);
    }
