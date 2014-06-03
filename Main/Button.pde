@@ -5,6 +5,7 @@ public class Button {
   int y;
   int c;
   PFont f;
+  boolean locked;
   boolean pressed;
   
   public Button (String s, int setx, int sety) {
@@ -12,7 +13,7 @@ public class Button {
     x = setx;
     y = sety;
     c = color(113, 234, 163);
-    pressed = false;
+    locked = false;
     //f = createFont("Arial",16,false);
   }
   
@@ -27,13 +28,17 @@ public class Button {
   public void highlight () {
   }
   
-  public boolean pressedOn() {
+   public boolean pressedOn() {
     if (mousePressed){
       if (((mouseX >= x) && (mouseX <= x+50)) && ((mouseY >= y) && (mouseY <= y + 20))) {
         return true;
       }
     }
     return false;
+  }
+  
+  public boolean overButton() {
+      return (((mouseX >= x) && (mouseX <= x+60)) && ((mouseY >= y) && (mouseY <= y + 20))); 
   }
   
   

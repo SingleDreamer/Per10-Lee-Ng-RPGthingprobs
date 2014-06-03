@@ -81,20 +81,8 @@ void draw() {
   
   //button
   move.display(f);
-  if (move.pressedOn()){
-    print ("move"+currentChar.getName());
-    move.pressed = true;
-  }
   attack.display(f);
-  if (attack.pressedOn()){
-    print ("attack");
-    attack.pressed = true;
-  } 
   endTurn.display(f);
-  if (endTurn.pressedOn()){
-    print ("endTurn");
-    endTurn.pressed = true;
-  }
   //may do multiple times, make a 'move open' var to keep it once
   
   //characters
@@ -105,13 +93,6 @@ void draw() {
     players[i].drawStats(f, 400, 25+i*100);
   }
   
-  //movement
-  if (move.pressed == true){
-    moveAction();
-  }
-  if (endTurn.pressed == true){
-    endTurnAction(); 
-  }
  
 }
 
@@ -119,8 +100,43 @@ void draw() {
 //gamestuff, not in proper location
 //??????
 
+void mousePressed(){
+  //endturnbutton
+  if (endTurn.overButton()){
+   endTurn.locked = true;
+   print("endTurn");
+   endTurnAction(); 
+  }else{
+   endTurn.locked = false; 
+  }
+  //movebutton
+  if (move.overButton()){
+   move.locked = true;
+   move.pressed = true;
+   print("move"+currentChar.getName());
+  }else{
+   move.locked = false; 
+  }
+  if (move.pressed == true){
+    moveAction();
+  }
+  //attackbutton
+  if (attack.overButton()){
+   attack.locked = true;
+   print("attack");
+    
+  }else{
+   attack.locked = false; 
+  }
+}
+
+void mouseReleased(){
+ endTurn.locked = false;
+ attack.locked = false;
+ move.locked = false; 
+}
+
 public void moveAction(){
- if (mousePressed) {  
       if (current.getCurrent()){
         if (!(current.occupied())){  
           currentChar.move(current);
@@ -134,11 +150,9 @@ public void moveAction(){
           currentChar = turnOrder.get(n);
         }
       }
-    } 
 }
 
 public void endTurnAction(){
- if (mousePressed) {
    endTurn.pressed = false;
    if (n == turnOrder.size() - 1){
      n = 0;
@@ -146,5 +160,4 @@ public void endTurnAction(){
      n = n + 1; 
    }
    currentChar = turnOrder.get(n);
- }
 }
