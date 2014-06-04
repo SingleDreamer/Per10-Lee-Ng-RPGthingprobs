@@ -30,6 +30,10 @@ public class Player extends Character {
     location = map[x][y];
     location.occupy();
   }
+  
+  public Tile getLocation () {
+    return location;
+  }
 
 
   public void move (Tile target) {

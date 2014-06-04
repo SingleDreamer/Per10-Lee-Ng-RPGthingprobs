@@ -36,7 +36,7 @@ void setup() {
   map = new Tile [cols][rows];
   for (int i = 0; i < cols; i++) {
     for (int j = 0; j < rows; j++) {
-      map[i][j] = new Tile(i*25,j*25,25,25);
+      map[i][j] = new Tile(i*25,j*25,25,25,i,j);
     }
   }
   links = new ArrayList <Tile> ();
@@ -112,9 +112,14 @@ void draw() {
   
   //moving
   if (move.pressed){
-   if (current.getCurrent() && !(current.occupied())){
-     links.add(current);
-    }
+   //if (current.getCurrent() && !(current.occupied())){
+     //links.add(current);
+    //}
+    int r = currentChar.getLocation().getI();
+    int c = currentChar.getLocation().getJ();
+    print ("("+r+", "+c+ ")");
+    //for (int i = 0; i <= 3; i++) {
+      //for (int i = 3; i >= 0; i--) {
   }
   
  
@@ -138,8 +143,6 @@ void mousePressed(){
    move.locked = true;
    move.pressed = true;
    print("move"+currentChar.getName());
-   links.add(current);
-
   }else{
    move.locked = false;
   }
