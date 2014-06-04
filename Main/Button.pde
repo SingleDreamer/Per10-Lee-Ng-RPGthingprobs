@@ -1,28 +1,21 @@
 public class Button {
  
-  String t;
   int x;
   int y;
-  int c;
   PFont f;
   boolean locked;
   boolean pressed;
-  
-  public Button (String s, int setx, int sety) {
-    t = s;
+  PImage img;
+
+  public Button (PImage image, int setx, int sety){
     x = setx;
     y = sety;
-    c = color(113, 234, 163);
     locked = false;
-    //f = createFont("Arial",16,false);
+    img = image;
   }
   
-  public void display (PFont f){
-    rect (x, y, 60, 20);
-    textFont(f,12);
-    fill(0);
-    text (t, x+7, y+15);
-    fill(c);
+  public void display (){
+    image(img, x, y);
   }
   
   public void highlight () {

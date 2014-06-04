@@ -10,17 +10,20 @@ public class Player extends Character {
   private int health;
   private int attackrange;
   private String name;
+  private PImage img;
 
   private Tile location;
 
   public Player() {
     super();
     location = map [4][4];
+    img = loadImage("player.bmp");
   }
 
-  public Player(String s){
-   super(s);
+  public Player(String s, PImage image){
+   super(s, image);
    location = map [4][4];
+   img = loadImage("player.bmp");
   }
 
   public void setLocation(int x, int y){
@@ -49,8 +52,7 @@ public class Player extends Character {
   }
 
   public void display() {
-    fill (0, 255, 0);
-    ellipse (location.getX(), location.getY(), 10, 10);
+    image(img, location.getX()-12, location.getY()-12);
   }
 }
 

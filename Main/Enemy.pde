@@ -2,7 +2,7 @@ import java.util.*;
 
 public class Enemy extends Character{
    //contains enemy specific stats and functions
-   //should probably have some ai stuff here but that will probably be in the main 
+   //should probably have some ai stuff here but that will probably be in the main
    
    //variable for player location
    private ArrayList<Tile> players;
@@ -15,6 +15,7 @@ public class Enemy extends Character{
    private int health;
    private int attackrange;
    private String name;
+   private PImage img;
    
    private Tile location;
   
@@ -22,15 +23,17 @@ public class Enemy extends Character{
    public Enemy(){
       super();
       location = map [0][0];
+      img = loadImage("enemy.bmp");
    }
    
-   public Enemy(String s){
-      super(s); 
+   public Enemy(String s, PImage image){
+      super(s, image);
       location = map[0][0];
-   }      
+      img = loadImage("enemy.bmp");
+   }
  
    public void setLocation(int x, int y){
-     location = map[x][y]; 
+     location = map[x][y];
      location.occupy();
    }
 
@@ -55,18 +58,17 @@ public class Enemy extends Character{
       location.occupy();
    }
    
-   public void attack(Character other){
+   //public void attack(Character other){
       //if (attackrange contains an enemy)
       //change equations and add special attacks later
-      other.setHealth(-1 * (getAttack() - other.getDefense()));
-   }
+      //other.setHealth(-1 * (getAttack() - other.getDefense()));
+   //}
    
    public void endturn(){
       //end the turn
    }
    
    public void display () {
-     fill (255, 0, 0);
-     ellipse (location.getX(), location.getY(), 10, 10);
+     image(img, location.getX()-12, location.getY()-12);
    }
 }

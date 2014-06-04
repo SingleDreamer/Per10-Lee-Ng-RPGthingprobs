@@ -7,14 +7,22 @@ private int cols = 15;
 private int rows = 15;
 private int n;
 private PFont f;
+private PImage backgroundimg;
+
+//buttons
 private Button move;
+private PImage moveimg;
 private Button attack;
+private PImage attackimg;
 private Button endTurn;
+private PImage endTurnimg;
 private ArrayList<Tile> links;
 
 //characters
 private Character[] enemies;
+private PImage enemyimg;
 private Character[] players;
+private PImage playerimg;
 private Character currentChar;
 private ArrayList<Character> turnOrder;
 
@@ -22,8 +30,9 @@ private ArrayList<Character> turnOrder;
 void setup() {
   
   //board
-  size (700, 500);
-  background(255);
+  size (700, 376);
+  backgroundimg = loadImage("background.png");
+  image(backgroundimg, 0, 0);
   map = new Tile [cols][rows];
   for (int i = 0; i < cols; i++) {
     for (int j = 0; j < rows; j++) {
@@ -33,13 +42,16 @@ void setup() {
   links = new ArrayList <Tile> ();
 
   //button
-  move = new Button ("Move",420, 360);
-  attack = new Button("Attack",520, 360);
-  attack.c = color(200, 0, 0);
-  endTurn = new Button("End Turn",620, 360);
-  endTurn.c = color(150, 150, 150);
+  moveimg = loadImage("move.png");
+  move = new Button(moveimg, 412, 350);
+  attackimg = loadImage("attack.png");
+  attack = new Button(attackimg, 512, 350);
+  endTurnimg = loadImage("endTurn.png");
+  endTurn = new Button(endTurnimg, 612, 350);
   
   //characters
+  enemyimg = loadImage("enemy.bmp");
+  playerimg = loadImage("player.bmp");
   enemies = new Character[3];
   players = new Character[3];
   
@@ -47,13 +59,11 @@ void setup() {
   turnOrder = new ArrayList<Character>();
   
   for (int i = 0; i < 3; i++){
-    enemies[i] = new Enemy("Enemy"+(i+1));
+    enemies[i] = new Enemy("Enemy"+(i+1), enemyimg);
     enemies[i].setLocation(i,0);
-    enemies[i].getLocation().setChar(enemies[i]);
     turnOrder.add(enemies[i]);
-    players[i] = new Player("Player"+(i+1));
+    players[i] = new Player("Player"+(i+1), playerimg);
     players[i].setLocation(14-i,14);
-    players[i].getLocation().setChar(players[i]);
     turnOrder.add(players[i]);
   }
   
@@ -88,10 +98,9 @@ void draw() {
   }
   
   //button
-  move.display(f);
-  attack.display(f);
-  endTurn.display(f);
-  //may do multiple times, make a 'move open' var to keep it once
+  move.display();
+  attack.display();
+  endTurn.display();
   
   //characters
   for (int i = 0; i < enemies.length; i++){

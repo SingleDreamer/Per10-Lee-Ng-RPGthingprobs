@@ -10,6 +10,7 @@ public class Character implements Comparable<Character>{
    private int attackrange;
    private String name;
    private boolean selected;
+   private PImage img;
    
    private Tile location;
    
@@ -25,9 +26,10 @@ public class Character implements Comparable<Character>{
       location = map[0][0];
       name = "Generic dude";
       selected = false;
+      img = loadImage("player.bmp");
    }
    
-   public Character(String s){
+   public Character(String s, PImage image){
       Random raw = new Random();
       attack = raw.nextInt(18) + 3;
       defense = raw.nextInt(18) + 3;
@@ -39,6 +41,7 @@ public class Character implements Comparable<Character>{
       location = map[0][0];
       name = s;
       selected = false;
+      img = image;
    }
    
    public String getName(){ return name; }
