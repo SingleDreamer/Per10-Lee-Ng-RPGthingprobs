@@ -17,13 +17,13 @@ public class Player extends Character {
   public Player() {
     super();
     location = map [4][4];
-    img = loadImage("player.bmp");
+    img = loadImage("player.png");
   }
 
   public Player(String s, PImage image){
    super(s, image);
    location = map [4][4];
-   img = loadImage("player.bmp");
+   img = loadImage("player.png");
   }
 
   public void setLocation(int x, int y){

@@ -23,13 +23,13 @@ public class Enemy extends Character{
    public Enemy(){
       super();
       location = map [0][0];
-      img = loadImage("enemy.bmp");
+      img = loadImage("enemy.png");
    }
    
    public Enemy(String s, PImage image){
       super(s, image);
       location = map[0][0];
-      img = loadImage("enemy.bmp");
+      img = loadImage("enemy.png");
    }
  
    public void setLocation(int x, int y){
@@ -48,9 +48,9 @@ public class Enemy extends Character{
       }
    }
    
-   public void resetCoords(ArrayList<Tile> tiles){
+   /*public void resetCoords(ArrayList<Tile> tiles){
       players = tiles;
-   }
+   }*/
    
    public void move(Tile target){
       //if selected tile is in moverange and unoccupied, put player on selected tile

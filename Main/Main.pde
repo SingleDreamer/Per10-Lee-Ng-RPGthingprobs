@@ -50,8 +50,8 @@ void setup() {
   endTurn = new Button(endTurnimg, 612, 350);
   
   //characters
-  enemyimg = loadImage("enemy.bmp");
-  playerimg = loadImage("player.bmp");
+  enemyimg = loadImage("enemy.png");
+  playerimg = loadImage("player.png");
   enemies = new Character[3];
   players = new Character[3];
   
@@ -118,8 +118,19 @@ void draw() {
     int r = currentChar.getLocation().getI();
     int c = currentChar.getLocation().getJ();
     print ("("+r+", "+c+ ")");
-    //for (int i = 0; i <= 3; i++) {
-      //for (int i = 3; i >= 0; i--) {
+    int a = 0;
+    for (int i = 3; i <= -3; i--) {
+      if (i <= 0) {
+        links.add (map [r + i][c + a]);
+        links.add (map [r + i][c - a]);
+        a = a -1;
+      }
+      else {
+        links.add (map [r + i][c + a]);
+        links.add (map [r + i][c - a]);
+        a = a + 1;
+      }
+    }
   }
   
  
