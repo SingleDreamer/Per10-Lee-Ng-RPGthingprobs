@@ -1,6 +1,6 @@
 public class Character implements Comparable<Character>{
    //interface character, extend it into player and enemy
-   //should have stats and generic functions 
+   //should have stats and generic functions
    private boolean isLow;
    private int attack;
    private int defense;
@@ -58,8 +58,8 @@ public class Character implements Comparable<Character>{
    
    public Tile getLocation(){ return location; }
    
-   public void setLocation(int x, int y) { 
-     location = map[x][y]; 
+   public void setLocation(int x, int y) {
+     location = map[x][y];
      location.occupy();
    }
    
@@ -77,14 +77,18 @@ public class Character implements Comparable<Character>{
   }
    
    public int compareTo(Character other){
-    return other.getSpeed() - this.getSpeed(); 
+    return other.getSpeed() - this.getSpeed();
    }
    
    public void move(Tile target){
      
    }
    public void attack(Character other){
-     
+     if (other == null){
+      print("nay"); 
+     }else{
+     other.setHealth(-10);
+     }
    }
    public void endturn(){
      

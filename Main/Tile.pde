@@ -17,6 +17,7 @@ public class Tile{
    private boolean current;
    private boolean occupied = false;
    private boolean linked = false;
+   private Character currentChar = null;
    
    //constructor
    public Tile (float x, float y, float w, float h) {
@@ -39,6 +40,12 @@ public class Tile{
    public boolean getCurrent() {
       return current;
    }
+   public Character getChar(){
+      return currentChar; 
+   }
+   public void setChar(Character c){
+      currentChar = c; 
+   }
    public boolean isHover(){
       return (((mouseX >= x) && (mouseX <= x+w)) && ((mouseY >= y) && (mouseY <= y+h)));
    }
@@ -51,6 +58,7 @@ public class Tile{
    }
    public void deoccupy() {
      occupied = false;
+     currentChar = null;
    }
    public void linkify() {
      linked = true;
