@@ -7,22 +7,14 @@ private int cols = 15;
 private int rows = 15;
 private int n;
 private PFont f;
-private PImage backgroundimg;
-
-//buttons
 private Button move;
-private PImage moveimg;
 private Button attack;
-private PImage attackimg;
 private Button endTurn;
-private PImage endTurnimg;
 private ArrayList<Tile> links;
 
 //characters
 private Character[] enemies;
-private PImage enemyimg;
 private Character[] players;
-private PImage playerimg;
 private Character currentChar;
 private ArrayList<Character> turnOrder;
 
@@ -30,28 +22,24 @@ private ArrayList<Character> turnOrder;
 void setup() {
   
   //board
-  size (700, 376);
-  backgroundimg = loadImage("background.png");
-  image(backgroundimg, 0, 0);
+  size (700, 500);
+  background(255);
   map = new Tile [cols][rows];
-  for (int i = 0; i < cols; i++) {
+  for (int i = 0; i < cols; i++) {    
     for (int j = 0; j < rows; j++) {
-      map[i][j] = new Tile(i*25,j*25,25,25);
+      map[i][j] = new Tile(i*25,j*25,25,25, i, j);
     }
   }
   links = new ArrayList <Tile> ();
 
   //button
-  moveimg = loadImage("move.png");
-  move = new Button(moveimg, 412, 350);
-  attackimg = loadImage("attack.png");
-  attack = new Button(attackimg, 512, 350);
-  endTurnimg = loadImage("endTurn.png");
-  endTurn = new Button(endTurnimg, 612, 350);
+  move = new Button ("Move",420, 360);
+  attack = new Button("Attack",520, 360);
+  attack.c = color(200, 0, 0);
+  endTurn = new Button("End Turn",620, 360);
+  endTurn.c = color(150, 150, 150);
   
   //characters
-  enemyimg = loadImage("enemy.bmp");
-  playerimg = loadImage("player.bmp");
   enemies = new Character[3];
   players = new Character[3];
   
@@ -59,10 +47,10 @@ void setup() {
   turnOrder = new ArrayList<Character>();
   
   for (int i = 0; i < 3; i++){
-    enemies[i] = new Enemy("Enemy"+(i+1), enemyimg);
+    enemies[i] = new Enemy("Enemy"+(i+1));
     enemies[i].setLocation(i,0);
     turnOrder.add(enemies[i]);
-    players[i] = new Player("Player"+(i+1), playerimg);
+    players[i] = new Player("Player"+(i+1)); 
     players[i].setLocation(14-i,14);
     turnOrder.add(players[i]);
   }
@@ -83,6 +71,7 @@ void setup() {
 
 //DRAW
 void draw() {
+  
   //board
   for (int i = 0; i < cols; i++) {
     for (int j = 0; j < rows; j++) {
@@ -94,13 +83,14 @@ void draw() {
   }
   for (Tile a : links) {
     a.linkify();
-    //print (a);
+    print (a);
   }
   
   //button
-  move.display();
-  attack.display();
-  endTurn.display();
+  move.display(f);
+  attack.display(f);
+  endTurn.display(f);
+  //may do multiple times, make a 'move open' var to keep it once
   
   //characters
   for (int i = 0; i < enemies.length; i++){
@@ -111,10 +101,35 @@ void draw() {
   }
   
   //moving
-  if (move.pressed){
-   if (current.getCurrent() && !(current.occupied())){
-     links.add(current);
-    }
+  if (move.pressed){  
+   //if (current.getCurrent() && !(current.occupied())){   
+     //links.add(current);
+     /*int x,y;
+   x = currentChar.getLocation().getI();
+   y = currentChar.getLocation().getJ();
+   for (int i = 0; i <= 3; i++) {
+      for (int j = 3; i >= 0; i--) {
+        if ((x + i > 0) && (x + i < rows)) {
+          if ((y+j > 0) && (y+j < cols)) {
+            links.add (map [x+i][y+j]);
+          }
+          if ((y-j >0) && (y-j <cols)) {
+            links.add (map [x+i][y-j]);
+          }
+        }
+        if ((x - i > 0) && (x - i < rows)) {
+          if ((y+j > 0) && (y+j < cols)) {
+            links.add (map [x-i][y+j]);
+          }
+          if ((y-j >0) && (y-j <cols)) {
+            links.add (map [x-i][y-j]);
+          }
+        }
+      }
+   }*/
+      links.add(map[5][5]);
+
+    //}
   }
   
  
@@ -129,19 +144,20 @@ void mousePressed(){
   if (endTurn.overButton()){
    endTurn.locked = true;
    print("endTurn");
-   endTurnAction();
+   endTurnAction(); 
   }else{
-   endTurn.locked = false;
+   endTurn.locked = false; 
   }
   //movebutton
   if (move.overButton()){
    move.locked = true;
    move.pressed = true;
-   print("move"+currentChar.getName());
-   links.add(current);
+   print("move"+currentChar.getName());        
+   //links.add(current);
 
+   
   }else{
-   move.locked = false;
+   move.locked = false; 
   }
   if (move.pressed == true){
     moveAction();
@@ -154,38 +170,23 @@ void mousePressed(){
   //attackbutton
   if (attack.overButton()){
    attack.locked = true;
-   attack.pressed = true;
    print("attack");
     
   }else{
-   attack.locked = false;
-  }
-  if (attack.pressed == true){
-   attackAction(currentChar); 
+   attack.locked = false; 
   }
 }
 
 void mouseReleased(){
  endTurn.locked = false;
  attack.locked = false;
- move.locked = false;
-}
-
-public void attackAction(Character attacker){
-    if (current.getCurrent()){
-       if (current.occupied()){
-          Character defender = current.getChar();
-          attack.pressed = false;
-          attacker.attack(defender);
-       } 
-    }
+ move.locked = false; 
 }
 
 public void moveAction(){
       if (current.getCurrent()){
-        if (!(current.occupied())){
+        if (!(current.occupied())){  
           currentChar.move(current);
-          current.setChar(currentChar);
           move.pressed = false;
           if (n == turnOrder.size() - 1) {
             n = 0;
@@ -203,7 +204,7 @@ public void endTurnAction(){
    if (n == turnOrder.size() - 1){
      n = 0;
    } else{
-     n = n + 1;
+     n = n + 1; 
    }
    currentChar = turnOrder.get(n);
 }

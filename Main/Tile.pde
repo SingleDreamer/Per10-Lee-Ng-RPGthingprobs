@@ -8,6 +8,7 @@ public class Tile{
    //coordinates
    private float x, y;
    private float w, h;
+   private int i, j;
    
    //color
    private int c = color (63, 191, 95);
@@ -17,14 +18,15 @@ public class Tile{
    private boolean current;
    private boolean occupied = false;
    private boolean linked = false;
-   private Character currentChar = null;
    
    //constructor
-   public Tile (float x, float y, float w, float h) {
+   public Tile (float x, float y, float w, float h, int i, int j) {
       this.x = x;
       this.y = y;
       this.w = w;
       this.h = h;
+      this.i = i;
+      this.j = j;
    }
    
    //get coordinates
@@ -34,17 +36,17 @@ public class Tile{
    public float getY() {
       return y + (h/2);
    }
+   public int getI() {
+      return i;
+   }
+   public int getJ() {
+     return j;
+   }
    
    //states
      //current
    public boolean getCurrent() {
       return current;
-   }
-   public Character getChar(){
-      return currentChar; 
-   }
-   public void setChar(Character c){
-      currentChar = c; 
    }
    public boolean isHover(){
       return (((mouseX >= x) && (mouseX <= x+w)) && ((mouseY >= y) && (mouseY <= y+h)));
@@ -58,7 +60,6 @@ public class Tile{
    }
    public void deoccupy() {
      occupied = false;
-     currentChar = null;
    }
    public void linkify() {
      linked = true;
