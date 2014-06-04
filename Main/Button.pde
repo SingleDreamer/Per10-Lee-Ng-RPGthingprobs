@@ -38,7 +38,7 @@ public class Button {
   }
   
   public boolean overButton() {
-      return (((mouseX >= x) && (mouseX <= x+60)) && ((mouseY >= y) && (mouseY <= y + 20))); 
+      return (((mouseX >= x) && (mouseX <= x+60)) && ((mouseY >= y) && (mouseY <= y + 20)));
   }
   
   

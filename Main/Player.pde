@@ -38,11 +38,11 @@ public class Player extends Character {
 
   }
 
-  public void attack(Character other) {
+  //public void attack(Character other) {
     //if (attackrange contains an enemy)
     //change equations and add special attacks later
-    other.setHealth(-1 * (getAttack() - other.getDefense()));
-  }
+    //other.setHealth(-1 * (getAttack() - other.getDefense()));
+  //}
 
   public void endturn() {
     //end the turn
@@ -53,4 +53,5 @@ public class Player extends Character {
     ellipse (location.getX(), location.getY(), 10, 10);
   }
 }
+
 

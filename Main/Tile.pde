@@ -10,12 +10,17 @@ public class Tile{
    private float w, h;
    
    //color
-   private int c = 255;
+   private int c = color (63, 191, 95);
    //private color tcolor = #FFFFFF;
    
    //states
    private boolean current;
    private boolean occupied = false;
+   private boolean linked = false;
+<<<<<<< HEAD
+   private Character currentChar = null;
+=======
+>>>>>>> e983058f5e944dde072cbc65a76b668f03a78324
    
    //constructor
    public Tile (float x, float y, float w, float h) {
@@ -38,6 +43,12 @@ public class Tile{
    public boolean getCurrent() {
       return current;
    }
+   public Character getChar(){
+      return currentChar; 
+   }
+   public void setChar(Character c){
+      currentChar = c; 
+   }
    public boolean isHover(){
       return (((mouseX >= x) && (mouseX <= x+w)) && ((mouseY >= y) && (mouseY <= y+h)));
    }
@@ -50,14 +61,27 @@ public class Tile{
    }
    public void deoccupy() {
      occupied = false;
+     currentChar = null;
+   }
+   public void linkify() {
+     linked = true;
+   }
+   public void delinkify() {
+     linked = false;
+   }
+   public void linkify() {
+     linked = true;
+   }
+   public void delinkify() {
+     linked = false;
    }
    
    //color
    public void changeOn() {
-     c = 0;
+     c = color (12, 232, 67);
    }
    public void changeOff() {
-     c = 255;
+     c = color (63, 191, 95);
    }
    /*public void changeColor() {
 if (tcolor == #FFFFFF) {
@@ -79,14 +103,24 @@ tcolor = #FFFFFF;
      /*else if (occupied) {
 this.changeOn();
 }*/
+     else if (linked) {
+       this.changeOn();
+       current = false;
+     }
      else {
        this.changeOff();
        current = false;
      }
-     stroke (0);
+     stroke (color(32, 135, 58));
      fill (c);
      rect (x, y, w, h);
    }
+   
+   //toString
+   public String toString() {
+     return "("+x+", "+y+")";
+   }
+  
    /*public void display () {
 fill (tcolor);
 rect (x, y, w, h);
