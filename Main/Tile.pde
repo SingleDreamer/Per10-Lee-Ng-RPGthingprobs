@@ -19,6 +19,7 @@ public class Tile{
    private boolean occupied = false;
    private boolean linked = false;
    private Character currentChar = null;
+   //private boolean action = false;
    
    //constructor
    public Tile (float x, float y, float w, float h, int i, int j) {
@@ -78,6 +79,12 @@ public class Tile{
    public boolean getLinked() {
      return linked;
    }
+   /*public void action() {
+     action = true;
+   }
+   public void deaction() {
+     action = false;
+   }*/
    
    //color
    public void changeOn() {
@@ -106,10 +113,14 @@ tcolor = #FFFFFF;
      /*else if (occupied) {
 this.changeOn();
 }*/
+     /*else if (action) {
+       c = color (255, 0, 0);
+     }*/
      else if (linked) {
-       this.changeOn();
+       c = color (36, 242, 180);
        current = false;
      }
+     
      else {
        this.changeOff();
        current = false;

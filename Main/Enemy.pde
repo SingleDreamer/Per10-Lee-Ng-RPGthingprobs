@@ -41,8 +41,7 @@ public class Enemy extends Character{
      return location;
    }
 
-   
-   public void checkHealth(){
+    public void checkHealth(){
       if (health < (health/2)){
          isLow = true;
       }

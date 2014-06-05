@@ -117,11 +117,14 @@ void draw() {
     //}
     int r = currentChar.getLocation().getI();
     int c = currentChar.getLocation().getJ();
-    print ("("+r+", "+c+ ")");
     int a = 0;
-    for (int i = 3; i >= -3; i--) {
+    for (int i = currentChar.getMoveRange(); i >= -(currentChar.getMoveRange()); i--) {
       if ((r+i>=0) && (r+i < rows)) {
         for (int j = a; j >= 0; j --) {
+            /*if ((i==0)&&(j==0)) {
+              currentChar.getLocation().action();
+              links.add(map[r][c]);
+            }*/
             if ((c+j>=0) && (c+j < cols)) {
               links.add (map [r + i][c + j]);
             }
@@ -129,13 +132,13 @@ void draw() {
               links.add (map [r + i][c - j]);
             }  
           }
-          if (i <= 0) {
+        }
+        if (i <= 0) {
             a = a - 1;
           }
           else {
             a = a + 1;
           }
-        }
       }
     }
   
@@ -205,6 +208,7 @@ public void moveAction(){
       if (current.getCurrent()){
         if (!(current.occupied())){
           if (current.getLinked()) {
+            //currentChar.getLocation().deaction();
             currentChar.move(current);
             current.setChar(currentChar);
             move.pressed = false;
@@ -227,5 +231,6 @@ public void endTurnAction(){
    } else{
      n = n + 1;
    }
+   //currentChar.getLocation().deaction();
    currentChar = turnOrder.get(n);
 }
