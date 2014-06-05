@@ -11,6 +11,7 @@ public class Character implements Comparable<Character>{
    private String name;
    private boolean selected;
    private PImage img;
+   private int actioncount;
    
    private Tile location;
    
@@ -27,6 +28,7 @@ public class Character implements Comparable<Character>{
       name = "Generic dude";
       selected = false;
       img = loadImage("player.bmp");
+      actioncount = 0;
    }
    
    public Character(String s, PImage image){
@@ -42,9 +44,14 @@ public class Character implements Comparable<Character>{
       name = s;
       selected = false;
       img = image;
+      actioncount = 0;
    }
    
    public String getName(){ return name; }
+   
+   public int getActions(){ return actioncount; }
+   public void resetActions() { actioncount = 0; }
+   public void upActions(){ actioncount ++; }
    
    public int getHealth(){ return health; }
    public void setHealth(int n){ health = health + n; }
@@ -58,6 +65,7 @@ public class Character implements Comparable<Character>{
    public int getSpeed(){ return speed; }
    
    public int getMoveRange(){ return moverange; }
+   public int getAttackRange(){ return attackrange; }
    
    public Tile getLocation(){ return location; }
    
@@ -69,7 +77,7 @@ public class Character implements Comparable<Character>{
    public void changeSelect(){ selected = !selected; }
    
    public void drawStats(PFont f, int x, int y){
-    textFont(f,16);
+    textFont(f, 16);
     fill(0);
     String s = "";
     s += getName() + "\n";
@@ -90,7 +98,8 @@ public class Character implements Comparable<Character>{
      if (other == null){
       print("nay"); 
      }else{
-     other.setHealth(-10);
+     int damage = 5 + (this.getAttack() / other.getDefense());
+     other.setHealth(-1*damage);
      }
    }
    public void endturn(){

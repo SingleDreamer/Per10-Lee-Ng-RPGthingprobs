@@ -11,6 +11,7 @@ public class Player extends Character {
   private int attackrange;
   private String name;
   private PImage img;
+  private int actioncount;
 
   private Tile location;
 
