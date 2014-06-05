@@ -1,3 +1,7 @@
+//note, if move is pressed and then end turn is pressed 
+//w/o moving the char, 
+//next char automatically does move
+
 //VARS
 
 //board
