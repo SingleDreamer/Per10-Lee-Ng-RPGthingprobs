@@ -119,19 +119,25 @@ void draw() {
     int c = currentChar.getLocation().getJ();
     print ("("+r+", "+c+ ")");
     int a = 0;
-    for (int i = 3; i <= -3; i--) {
-      if (i <= 0) {
-        links.add (map [r + i][c + a]);
-        links.add (map [r + i][c - a]);
-        a = a -1;
-      }
-      else {
-        links.add (map [r + i][c + a]);
-        links.add (map [r + i][c - a]);
-        a = a + 1;
+    for (int i = 3; i >= -3; i--) {
+      if ((r+i>=0) && (r+i < rows)) {
+        for (int j = a; j >= 0; j --) {
+            if ((c+j>=0) && (c+j < cols)) {
+              links.add (map [r + i][c + j]);
+            }
+            if ((c-j>=0) && (c-j < cols)) {
+              links.add (map [r + i][c - j]);
+            }  
+          }
+          if (i <= 0) {
+            a = a - 1;
+          }
+          else {
+            a = a + 1;
+          }
+        }
       }
     }
-  }
   
  
 }
@@ -198,16 +204,18 @@ public void attackAction(Character attacker){
 public void moveAction(){
       if (current.getCurrent()){
         if (!(current.occupied())){
-          currentChar.move(current);
-          current.setChar(currentChar);
-          move.pressed = false;
-          if (n == turnOrder.size() - 1) {
-            n = 0;
+          if (current.getLinked()) {
+            currentChar.move(current);
+            current.setChar(currentChar);
+            move.pressed = false;
+            if (n == turnOrder.size() - 1) {
+              n = 0;
+            }
+            else {
+              n = n + 1;
+            }
+            currentChar = turnOrder.get(n);
           }
-          else {
-            n = n + 1;
-          }
-          currentChar = turnOrder.get(n);
         }
       }
 }

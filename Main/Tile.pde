@@ -75,6 +75,9 @@ public class Tile{
    public void delinkify() {
      linked = false;
    }
+   public boolean getLinked() {
+     return linked;
+   }
    
    //color
    public void changeOn() {
