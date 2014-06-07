@@ -12,6 +12,7 @@ public class Character implements Comparable<Character>{
    private boolean selected;
    private PImage img;
    private int actioncount;
+   private boolean dead;
    
    private Tile location;
    
@@ -29,6 +30,7 @@ public class Character implements Comparable<Character>{
       selected = false;
       img = loadImage("player.bmp");
       actioncount = 0;
+      dead = false;
    }
    
    public Character(String s, PImage image){
@@ -45,6 +47,7 @@ public class Character implements Comparable<Character>{
       selected = false;
       img = image;
       actioncount = 0;
+      dead = false;
    }
    
    public String getName(){ return name; }
@@ -67,6 +70,9 @@ public class Character implements Comparable<Character>{
    public int getMoveRange(){ return moverange; }
    public int getAttackRange(){ return attackrange; }
    
+   public void die(){ dead = true; }
+   public boolean isDead(){ return dead; }
+   
    public Tile getLocation(){ return location; }
    
    public void setLocation(int x, int y) {
@@ -77,6 +83,7 @@ public class Character implements Comparable<Character>{
    public void changeSelect(){ selected = !selected; }
    
    public void drawStats(PFont f, int x, int y){
+     if (!dead){
     textFont(f, 16);
     fill(0);
     String s = "";
@@ -85,6 +92,7 @@ public class Character implements Comparable<Character>{
     s += "Attack: " + getAttack() + "\n";
     s += "Defense: " + getDefense() + "\n";
     text(s, x, y);
+     }
   }
    
    public int compareTo(Character other){
@@ -104,6 +112,15 @@ public class Character implements Comparable<Character>{
    }
    public void endturn(){
      
+   }
+   
+   public void checkHealth(){
+      if (health < (health/2)){
+         isLow = true;
+      }
+   }
+   public boolean isLow(){
+      return isLow; 
    }
    
    public void display() {

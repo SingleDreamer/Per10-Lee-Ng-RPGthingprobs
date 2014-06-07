@@ -42,11 +42,6 @@ public class Enemy extends Character{
      return location;
    }
 
-    public void checkHealth(){
-      if (health < (health/2)){
-         isLow = true;
-      }
-   }
    
    /*public void resetCoords(ArrayList<Tile> tiles){
       players = tiles;

@@ -1,7 +1,3 @@
-//note, if move is pressed and then end turn is pressed 
-//w/o moving the char, 
-//next char automatically does move
-
 //VARS
 
 //board
@@ -34,7 +30,7 @@ private ArrayList<Character> turnOrder;
 void setup() {
   
   //board
-  size (700, 376);
+  size (720, 376);
   backgroundimg = loadImage("background.png");
   image(backgroundimg, 0, 0);
   map = new Tile [cols][rows];
@@ -101,6 +97,7 @@ void draw() {
     //print (a);
   }
   
+  
   //button
   move.display();
   attack.display();
@@ -108,19 +105,43 @@ void draw() {
   
   //characters
   for (int i = 0; i < enemies.size(); i++){
+    if (!enemies.get(i).isDead()){
     enemies.get(i).display();
     color c = color(255, 125, 125);
+    enemies.get(i).checkHealth();
+    if (enemies.get(i).isLow()){
+       c = color(200, 100, 100); 
+    }
     fill(c);
-    rect(595, 5+i*100, 100, 100);
+    rect(595, 5+i*100, 105, 100);
     enemies.get(i).drawStats(f,600,25+i*100);
+    }else{
+    color c = color(120, 120, 120);
+    fill(c);
+    rect(595, 5+i*100, 105, 100);
+    }
   }
   for (int i = 0; i < players.size(); i++){
+    if (!players.get(i).isDead()){
     players.get(i).display();
     color c = color(125, 255, 125);
     fill(c);
-    rect(395, 5+i*100, 100, 100);
+    rect(395, 5+i*100, 105, 100);
     players.get(i).drawStats(f, 400, 25+i*100);
+    }else{
+      color c = color(120, 120, 120);
+      fill(c);
+      rect(395, 5+i*100, 105, 100);
+    }
   }
+  
+  color currentcharcolor = color(200, 200, 200);
+  fill(currentcharcolor);
+  rect(445, 315, 200, 20);
+  String currentname = "Currently " + currentChar.getName() + "'s turn";
+  fill(0);
+  text(currentname, 447, 332);
+  
   
   //dead characters
   for (int i = 0; i < turnOrder.size(); i++){
@@ -130,18 +151,23 @@ void draw() {
       if (chara instanceof Enemy){
          for (int e = 0; e < enemies.size(); e++){
             if (enemies.get(e).equals(chara)){
-               enemies.remove(e);
+               enemies.get(e).die();
             }
          } 
       }
       if (chara instanceof Player){
          for (int p = 0; p < players.size(); p++){
             if (players.get(p).equals(chara)){
-               players.remove(p);
+               players.get(p).die();
             } 
          }
       }
     } 
+  }
+  
+  //ai
+  if (currentChar instanceof Enemy){
+    //endTurnAction(); 
   }
   
   //moving
@@ -231,6 +257,7 @@ void mousePressed(){
   if (move.overButton()){
    move.locked = true;
    move.pressed = true;
+   attack.pressed = false;
    print("move"+currentChar.getName());
   }else{
    move.locked = false;
@@ -247,6 +274,7 @@ void mousePressed(){
   if (attack.overButton()){
    attack.locked = true;
    attack.pressed = true;
+   move.pressed = false;
    print("attack");
     
   }else{
@@ -273,7 +301,8 @@ public void attackAction(Character attacker){
          if (current.getLinked()){
           Character defender = current.getChar();
           attack.pressed = false;
-          attacker.attack(defender);
+          //attacker.attack(defender);
+          defender.setHealth(-25);
           currentChar.upActions();
           if (currentChar.getActions() == 2){
             currentChar.resetActions();
@@ -304,7 +333,7 @@ public void moveAction(){
 
 public void endTurnAction(){
    endTurn.pressed = false;
-   if (n == turnOrder.size() - 1){
+   if (n >= turnOrder.size() - 1){
      n = 0;
    } else{
      n = n + 1;
