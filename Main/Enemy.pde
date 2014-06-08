@@ -16,7 +16,11 @@ public class Enemy extends Character{
    private int attackrange;
    private String name;
    private PImage img;
-   private int actioncount;
+   private boolean moved;
+   private boolean attacked;
+   private boolean dead;
+   private int playerx;
+   private int playery;
    
    private Tile location;
   
@@ -25,12 +29,16 @@ public class Enemy extends Character{
       super();
       location = map [0][0];
       img = loadImage("enemy.png");
+      playerx = 0;
+      playery = 0;
    }
    
    public Enemy(String s, PImage image){
       super(s, image);
       location = map[0][0];
       img = loadImage("enemy.png");
+      playerx = 0;
+      playery = 0;
    }
  
    public void setLocation(int x, int y){
@@ -42,7 +50,8 @@ public class Enemy extends Character{
      return location;
    }
 
-   
+   private void setPX(int x){ playerx = x; }
+   private void setPY(int y){ playery = y; }
    /*public void resetCoords(ArrayList<Tile> tiles){
       players = tiles;
    }*/
@@ -63,11 +72,19 @@ public class Enemy extends Character{
       //other.setHealth(-1 * (getAttack() - other.getDefense()));
    //}
    
+    public void die(){ 
+     dead = true;
+     location.deoccupy();
+   }
+    public boolean isDead(){ return dead; }
+   
    public void endturn(){
       //end the turn
    }
    
    public void display () {
+     if (!dead){
      image(img, location.getX()-12, location.getY()-12);
+     }
    }
 }

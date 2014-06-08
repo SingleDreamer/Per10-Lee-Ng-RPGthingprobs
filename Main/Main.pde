@@ -17,6 +17,7 @@ private PImage attackimg;
 private Button endTurn;
 private PImage endTurnimg;
 private ArrayList<Tile> links;
+private ArrayList<Tile> alinks;
 
 //characters
 private ArrayList<Character> enemies;
@@ -40,6 +41,7 @@ void setup() {
     }
   }
   links = new ArrayList <Tile> ();
+  alinks = new ArrayList <Tile> ();
 
   //button
   moveimg = loadImage("move.png");
@@ -73,7 +75,7 @@ void setup() {
   f = createFont("Arial",16,false);
   
   for (Character i : turnOrder) {
-    print (i.getName() + " " + i.getSpeed() + "\n");
+    print (i + " " + i.getSpeed() + "\n");
   }
   print ("\n");
   print (currentChar);
@@ -96,6 +98,9 @@ void draw() {
     a.linkify();
     //print (a);
   }
+  for (Tile b : alinks) {
+    b.linkify();
+  }
   
   
   //button
@@ -109,9 +114,6 @@ void draw() {
     enemies.get(i).display();
     color c = color(255, 125, 125);
     enemies.get(i).checkHealth();
-    if (enemies.get(i).isLow()){
-       c = color(200, 100, 100); 
-    }
     fill(c);
     rect(595, 5+i*100, 105, 100);
     enemies.get(i).drawStats(f,600,25+i*100);
@@ -138,7 +140,7 @@ void draw() {
   color currentcharcolor = color(200, 200, 200);
   fill(currentcharcolor);
   rect(445, 315, 200, 20);
-  String currentname = "Currently " + currentChar.getName() + "'s turn";
+  String currentname = "Currently " + currentChar + "'s turn";
   fill(0);
   text(currentname, 447, 332);
   
@@ -167,15 +169,156 @@ void draw() {
   
   //ai
   if (currentChar instanceof Enemy){
-    //endTurnAction(); 
+    //ai attack
+    boolean attacking = false;
+    Random raw = new Random();
+    attackLink();
+    ArrayList<Character> targets = new ArrayList<Character>();
+    for (Tile a: alinks){
+      if (a.getChar() != null){
+         print(a.getChar());
+         if (a.getChar() instanceof Player){
+            targets.add(a.getChar()); 
+         }
+      } 
+    }
+    if (targets.size() > 0){
+      int attacktarget = raw.nextInt(targets.size());
+      currentChar.attack(targets.get(attacktarget));
+      attacking = true;
+    }
+    clearLink();
+    //ai movement
+    if (!attacking){
+    moveLink();
+    int moveloc = currentChar.getMoveRange() + raw.nextInt(currentChar.getMoveRange()*3);
+    Tile newloc = links.get(moveloc);
+    if (newloc.occupied()){ moveloc++;}
+    currentChar.move(newloc);
+    newloc.setChar(currentChar);
+    clearLink();
+    }
+    endTurnAction();
+    //print(newloc);
   }
   
   //moving
-  if (move.pressed){
+  if (move.pressed && !currentChar.moved()){
    //if (current.getCurrent() && !(current.occupied())){
      //links.add(current);
     //}
-    int r = currentChar.getLocation().getI();
+    moveLink();
+    }
+  
+ if (attack.pressed && !currentChar.attacked()){
+   //if (current.getCurrent() && !(current.occupied())){
+     //links.add(current);
+    //}
+    attackLink();
+    }
+ 
+}
+
+
+//gamestuff, not in proper location
+//??????
+
+void mousePressed(){
+  //endturnbutton
+  if (endTurn.overButton()){
+   clearLink();
+   move.pressed = false; 
+   endTurn.locked = true;
+   print("endTurn");
+   endTurnAction();
+  }else{
+   endTurn.locked = false;
+  }
+  //movebutton
+  if (move.overButton()){
+   move.locked = true;
+   move.pressed = true;
+   attack.pressed = false;
+   print("move"+currentChar);
+  }else{
+   move.locked = false;
+  }
+  if (move.pressed == true){
+    moveAction();
+    clearLink();
+  }
+  //attackbutton
+  if (attack.overButton()){
+   attack.locked = true;
+   attack.pressed = true;
+   move.pressed = false;
+   print("attack");
+    
+  }else{
+   attack.locked = false;
+  }
+  if (attack.pressed == true){
+   attackAction(currentChar); 
+   clearLink();
+  }
+}
+
+void mouseReleased(){
+ endTurn.locked = false;
+ attack.locked = false;
+ move.locked = false;
+}
+
+public void attackAction(Character attacker){
+    if (current.getCurrent()){
+       if (current.occupied()){
+         if (current.getLinked()){
+          Character defender = current.getChar();
+          attack.pressed = false;
+          attacker.attack(defender);
+          //defender.setHealth(-25);
+          currentChar.attackTurn();
+          if (currentChar.moved() == true && currentChar.attacked() == true){
+            endTurnAction(); 
+          }
+         }
+       } 
+    }
+}
+
+public void moveAction(){
+      if (current.getCurrent()){
+        if (!(current.occupied())){
+          if (current.getLinked()) {
+            //currentChar.getLocation().deaction();
+            currentChar.move(current);
+            current.setChar(currentChar);
+            move.pressed = false;
+            currentChar.moveTurn();
+            if (currentChar.attacked() == true && currentChar.moved() == true){
+              endTurnAction(); 
+            }
+          }
+        }
+      }
+}
+
+public void endTurnAction(){
+   endTurn.pressed = false;
+   move.pressed = false;
+   attack.pressed = false;
+   currentChar.resetActions();
+   if (n >= turnOrder.size() - 1){
+     n = 0;
+   } else{
+     n = n + 1;
+   }
+   //currentChar.getLocation().deaction();
+   currentChar = turnOrder.get(n);
+}
+
+public void moveLink(){
+  int r = currentChar.getLocation().getI();
     int c = currentChar.getLocation().getJ();
     int a = 0;
     for (int i = currentChar.getMoveRange(); i >= -(currentChar.getMoveRange()); i--) {
@@ -199,14 +342,23 @@ void draw() {
           else {
             a = a + 1;
           }
-      }
     }
-  
- if (attack.pressed){
-   //if (current.getCurrent() && !(current.occupied())){
-     //links.add(current);
-    //}
-    int r = currentChar.getLocation().getI();
+}
+
+public void clearLink(){
+  for (Tile z : links) {
+      z.delinkify();
+      //print (a);
+    }
+    links.clear();
+  for (Tile a : alinks) {
+      a.delinkify();
+    }
+    alinks.clear();
+}
+
+public void attackLink(){
+  int r = currentChar.getLocation().getI();
     int c = currentChar.getLocation().getJ();
     int a = 0;
     for (int i = currentChar.getAttackRange(); i >= -(currentChar.getAttackRange()); i--) {
@@ -217,10 +369,10 @@ void draw() {
               links.add(map[r][c]);
             }*/
             if ((c+j>=0) && (c+j < cols)) {
-              links.add (map [r + i][c + j]);
+              alinks.add (map [r + i][c + j]);
             }
             if ((c-j>=0) && (c-j < cols)) {
-              links.add (map [r + i][c - j]);
+              alinks.add (map [r + i][c - j]);
             }  
           }
         }
@@ -231,113 +383,4 @@ void draw() {
             a = a + 1;
           }
       }
-    }
- 
-}
-
-
-//gamestuff, not in proper location
-//??????
-
-void mousePressed(){
-  //endturnbutton
-  if (endTurn.overButton()){
-   for (Tile a : links){
-     a.delinkify(); 
-   }
-   links.clear();
-   move.pressed = false; 
-   endTurn.locked = true;
-   print("endTurn");
-   endTurnAction();
-  }else{
-   endTurn.locked = false;
-  }
-  //movebutton
-  if (move.overButton()){
-   move.locked = true;
-   move.pressed = true;
-   attack.pressed = false;
-   print("move"+currentChar.getName());
-  }else{
-   move.locked = false;
-  }
-  if (move.pressed == true){
-    moveAction();
-    for (Tile a : links) {
-      a.delinkify();
-      //print (a);
-    }
-    links.clear();
-  }
-  //attackbutton
-  if (attack.overButton()){
-   attack.locked = true;
-   attack.pressed = true;
-   move.pressed = false;
-   print("attack");
-    
-  }else{
-   attack.locked = false;
-  }
-  if (attack.pressed == true){
-   attackAction(currentChar); 
-   for (Tile a : links){
-     a.delinkify();
-   }
-   links.clear();
-  }
-}
-
-void mouseReleased(){
- endTurn.locked = false;
- attack.locked = false;
- move.locked = false;
-}
-
-public void attackAction(Character attacker){
-    if (current.getCurrent()){
-       if (current.occupied()){
-         if (current.getLinked()){
-          Character defender = current.getChar();
-          attack.pressed = false;
-          //attacker.attack(defender);
-          defender.setHealth(-25);
-          currentChar.upActions();
-          if (currentChar.getActions() == 2){
-            currentChar.resetActions();
-            endTurnAction(); 
-          }
-         }
-       } 
-    }
-}
-
-public void moveAction(){
-      if (current.getCurrent()){
-        if (!(current.occupied())){
-          if (current.getLinked()) {
-            //currentChar.getLocation().deaction();
-            currentChar.move(current);
-            current.setChar(currentChar);
-            move.pressed = false;
-            currentChar.upActions();
-            if (currentChar.getActions() == 2){
-              currentChar.resetActions();
-              endTurnAction(); 
-            }
-          }
-        }
-      }
-}
-
-public void endTurnAction(){
-   endTurn.pressed = false;
-   if (n >= turnOrder.size() - 1){
-     n = 0;
-   } else{
-     n = n + 1;
-   }
-   //currentChar.getLocation().deaction();
-   currentChar = turnOrder.get(n);
 }

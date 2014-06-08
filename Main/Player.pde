@@ -11,7 +11,9 @@ public class Player extends Character {
   private int attackrange;
   private String name;
   private PImage img;
-  private int actioncount;
+  private boolean moved;
+   private boolean attacked;
+   private boolean dead;
 
   private Tile location;
 
@@ -46,18 +48,28 @@ public class Player extends Character {
 
   }
 
-  //public void attack(Character other) {
-    //if (attackrange contains an enemy)
-    //change equations and add special attacks later
-    //other.setHealth(-1 * (getAttack() - other.getDefense()));
-  //}
+  public void attack(Character other){
+    if (other instanceof Enemy){
+       super.attack(other);
+    }else{
+       print("Don't attack your teammates!"); 
+    }
+  }
+
+ public void die(){ 
+     dead = true;
+     location.deoccupy();
+   }
+    public boolean isDead(){ return dead; }
 
   public void endturn() {
     //end the turn
   }
 
   public void display() {
+    if (!dead){
     image(img, location.getX()-12, location.getY()-12);
+    }
   }
 }
 

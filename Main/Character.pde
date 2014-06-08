@@ -11,7 +11,8 @@ public class Character implements Comparable<Character>{
    private String name;
    private boolean selected;
    private PImage img;
-   private int actioncount;
+   private boolean moved;
+   private boolean attacked;
    private boolean dead;
    
    private Tile location;
@@ -29,7 +30,8 @@ public class Character implements Comparable<Character>{
       name = "Generic dude";
       selected = false;
       img = loadImage("player.bmp");
-      actioncount = 0;
+      attacked = false;
+      moved = false;
       dead = false;
    }
    
@@ -46,15 +48,18 @@ public class Character implements Comparable<Character>{
       name = s;
       selected = false;
       img = image;
-      actioncount = 0;
+      attacked = false;
+      moved = false;
       dead = false;
    }
    
    public String getName(){ return name; }
    
-   public int getActions(){ return actioncount; }
-   public void resetActions() { actioncount = 0; }
-   public void upActions(){ actioncount ++; }
+   public boolean moved(){ return moved; }
+   public boolean attacked(){ return attacked; }
+   public void resetActions() { moved = false; attacked = false; }
+   public void moveTurn(){ moved = true; }
+   public void attackTurn() { attacked = true; }
    
    public int getHealth(){ return health; }
    public void setHealth(int n){ health = health + n; }
@@ -70,8 +75,11 @@ public class Character implements Comparable<Character>{
    public int getMoveRange(){ return moverange; }
    public int getAttackRange(){ return attackrange; }
    
-   public void die(){ dead = true; }
-   public boolean isDead(){ return dead; }
+   public void die(){ 
+     dead = true;
+     location.deoccupy();
+   }
+     public boolean isDead(){ return dead; }
    
    public Tile getLocation(){ return location; }
    
