@@ -86,6 +86,11 @@ public class Tile{
      action = false;
    }*/
    
+   //terrain
+   private boolean mountain = false;
+   private boolean water = false;
+   private boolean bridge = false;
+   
    //color
    public void changeOn() {
      c = color (12, 232, 67);
@@ -119,6 +124,13 @@ this.changeOn();
      else if (linked) {
        c = color (36, 242, 180);
        current = false;
+     }
+     else if (mountain) {
+       //triangle shape
+     }
+     else if (water) {
+     }
+     else if (bridge) {
      }
      
      else {
