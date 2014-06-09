@@ -20,6 +20,8 @@ private PImage tryagainimg;
 private Button tryagain;
 private boolean gameEnd;
 private PImage victoryimg;
+private int stage = 0;
+private boolean trans = false;
 
 //buttons
 private Button move;
@@ -127,159 +129,166 @@ void draw() {
   }else if (gameStart && gameEnd){
      //game over, enemies died
     image(victoryimg, 0, 0); 
-  }else if (gameStart && !gameEnd){
-  //board
-  backgroundimg = loadImage("background.png");
-  image(backgroundimg, 0, 0);
-  for (int i = 0; i < cols; i++) {
-    for (int j = 0; j < rows; j++) {
-      map[i][j].display();
-      if (map [i][j].getCurrent()){
-        current = map [i][j];
+  }
+//  else if (trans) {
+//    transition (stage);
+//  }
+//  else if (!trans) {
+    else if (gameStart && !gameEnd){
+    //board
+    backgroundimg = loadImage("background.png");
+    image(backgroundimg, 0, 0);
+    for (int i = 0; i < cols; i++) {
+      for (int j = 0; j < rows; j++) {
+        map[i][j].display();
+        if (map [i][j].getCurrent()){
+          current = map [i][j];
+        }
       }
     }
-  }
-  for (Tile a : links) {
-    a.linkify();
-    //print (a);
-  }
-  for (Tile b : alinks) {
-    b.linkify();
-  }
-
-  currentChar.getLocation().currently();
-  
-  //button
-  move.display();
-  attack.display();
-  endTurn.display();
-  
-  //characters
-  for (int i = 0; i < enemies.size(); i++){
-    if (!enemies.get(i).isDead()){
-    enemies.get(i).display();
-    color c = color(255, 125, 125);
-    enemies.get(i).checkHealth();
-    fill(c);
-    rect(595, 5+i*100, 105, 100);
-    enemies.get(i).drawStats(f,600,25+i*100);
-    }else{
-    color c = color(120, 120, 120);
-    fill(c);
-    rect(595, 5+i*100, 105, 100);
+    for (Tile a : links) {
+      a.linkify();
+      //print (a);
     }
-  }
-  for (int i = 0; i < players.size(); i++){
-    if (!players.get(i).isDead()){
-    players.get(i).display();
-    color c = color(125, 255, 125);
-    fill(c);
-    rect(395, 5+i*100, 105, 100);
-    players.get(i).drawStats(f, 400, 25+i*100);
-    }else{
+    for (Tile b : alinks) {
+      b.linkify();
+    }
+  
+    currentChar.getLocation().currently();
+    
+    //button
+    move.display();
+    attack.display();
+    endTurn.display();
+    
+    //characters
+    for (int i = 0; i < enemies.size(); i++){
+      if (!enemies.get(i).isDead()){
+      enemies.get(i).display();
+      color c = color(255, 125, 125);
+      enemies.get(i).checkHealth();
+      fill(c);
+      rect(595, 5+i*100, 105, 100);
+      enemies.get(i).drawStats(f,600,25+i*100);
+      }else{
       color c = color(120, 120, 120);
       fill(c);
+      rect(595, 5+i*100, 105, 100);
+      }
+    }
+    for (int i = 0; i < players.size(); i++){
+      if (!players.get(i).isDead()){
+      players.get(i).display();
+      color c = color(125, 255, 125);
+      fill(c);
       rect(395, 5+i*100, 105, 100);
+      players.get(i).drawStats(f, 400, 25+i*100);
+      }else{
+        color c = color(120, 120, 120);
+        fill(c);
+        rect(395, 5+i*100, 105, 100);
+      }
     }
-  }
-  
-  color currentcharcolor = color(200, 200, 200);
-  fill(currentcharcolor);
-  rect(445, 315, 200, 20);
-  String currentname = "Currently " + currentChar + "'s turn";
-  fill(0);
-  text(currentname, 447, 332);
-  
-  
-  //dead characters
-  for (int i = 0; i < turnOrder.size(); i++){
-    Character chara = turnOrder.get(i);
-    if (chara.getHealth() <= 0){
-      turnOrder.remove(i);
-      if (chara instanceof Enemy){
-         for (int e = 0; e < enemies.size(); e++){
-            if (enemies.get(e).equals(chara)){
-               enemies.get(e).die();
-               enemies.remove(e);
-               deadEnemy++;
-            }
-         } 
-      }
-      if (chara instanceof Player){
-         for (int p = 0; p < players.size(); p++){
-            if (players.get(p).equals(chara)){
-               players.get(p).die();
-               players.remove(p);
-               deadPlayer++;
-            } 
-         }
-      }
-    } 
-  }
-  
-  //AI
-   if (players.size() != 0) {
-
-    if (currentChar instanceof Enemy){
-      //ai attack
-      boolean attacking = false;
-      Random raw = new Random();
-      attackLink();
-      ArrayList<Character> targets = new ArrayList<Character>();
-      for (Tile a: alinks){
-        if (a.getChar() != null){
-           print(a.getChar());
-           if (a.getChar() instanceof Player){
-              targets.add(a.getChar()); 
+    
+    color currentcharcolor = color(200, 200, 200);
+    fill(currentcharcolor);
+    rect(445, 315, 200, 20);
+    String currentname = "Currently " + currentChar + "'s turn";
+    fill(0);
+    text(currentname, 447, 332);
+    
+    
+    //dead characters
+    for (int i = 0; i < turnOrder.size(); i++){
+      Character chara = turnOrder.get(i);
+      if (chara.getHealth() <= 0){
+        turnOrder.remove(i);
+        if (chara instanceof Enemy){
+           for (int e = 0; e < enemies.size(); e++){
+              if (enemies.get(e).equals(chara)){
+                 enemies.get(e).die();
+                 enemies.remove(e);
+                 deadEnemy++;
+              }
+           } 
+        }
+        if (chara instanceof Player){
+           for (int p = 0; p < players.size(); p++){
+              if (players.get(p).equals(chara)){
+                 players.get(p).die();
+                 players.remove(p);
+                 deadPlayer++;
+              } 
            }
-        } 
-      }
-      //choosing target
-      if (targets.size() > 0){
-        int attacktarget = raw.nextInt(targets.size());
-        currentChar.attack(targets.get(attacktarget));
-        attacking = true;
-      }
-      clearLink();
-      
-      //AI movement
-      if (!attacking){
-        moveLink();
-        //int moveloc = currentChar.getMoveRange() + raw.nextInt(currentChar.getMoveRange()*3);
-        //Tile newloc = links.get(moveloc);
-        Tile newloc = randomSet (currentChar, links, findDirection(currentChar, closest(currentChar)));
-        print (closest(currentChar));
-        print (randomSet (currentChar, links, findDirection(currentChar, closest(currentChar))));
-        //while (newloc.occupied()) {
-          //moveloc = currentChar.getMoveRange() + raw.nextInt(currentChar.getMoveRange()*3);
-          //newloc = links.get(moveloc);
-        //}
-        currentChar.move(newloc);
-        newloc.setChar(currentChar);
+        }
+      } 
+    }
+    
+    //AI
+     if (players.size() != 0) {
+  
+      if (currentChar instanceof Enemy){
+        //ai attack
+        boolean attacking = false;
+        Random raw = new Random();
+        attackLink();
+        ArrayList<Character> targets = new ArrayList<Character>();
+        for (Tile a: alinks){
+          if (a.getChar() != null){
+             print(a.getChar());
+             if (a.getChar() instanceof Player){
+                targets.add(a.getChar()); 
+             }
+          } 
+        }
+        //choosing target
+        if (targets.size() > 0){
+          int attacktarget = raw.nextInt(targets.size());
+          currentChar.attack(targets.get(attacktarget));
+          attacking = true;
+        }
         clearLink();
+        
+        //AI movement
+        if (!attacking){
+          moveLink();
+          //int moveloc = currentChar.getMoveRange() + raw.nextInt(currentChar.getMoveRange()*3);
+          //Tile newloc = links.get(moveloc);
+          Tile newloc = randomSet (currentChar, links, findDirection(currentChar, closest(currentChar)));
+          print (closest(currentChar));
+          print (randomSet (currentChar, links, findDirection(currentChar, closest(currentChar))));
+          //while (newloc.occupied()) {
+            //moveloc = currentChar.getMoveRange() + raw.nextInt(currentChar.getMoveRange()*3);
+            //newloc = links.get(moveloc);
+          //}
+          currentChar.move(newloc);
+          newloc.setChar(currentChar);
+          clearLink();
+        }
+        endTurnAction();
       }
-      endTurnAction();
+     }
+    
+    
+    //moving
+    if (move.pressed && !currentChar.moved()){
+      moveLink();
+      }
+    
+   if (attack.pressed && !currentChar.attacked()){
+      attackLink();
+      }
+    
+    if (deadPlayer == 3){
+       gameEnd = true;
+       gameOver = true;
     }
-   }
-  
-  
-  //moving
-  if (move.pressed && !currentChar.moved()){
-    moveLink();
+    if (deadEnemy == 3){
+       //trans = true;
+       map [7][7].treasure();
     }
-  
- if (attack.pressed && !currentChar.attacked()){
-    attackLink();
     }
-  
-  if (deadPlayer == 3){
-     gameEnd = true;
-     gameOver = true;
-  }
-  if (deadEnemy == 3){
-     gameEnd = true; 
-  }
-  }
+ //}
 }
 
 //ACTIONS
@@ -334,6 +343,25 @@ void mousePressed(){
     setup();
   }else{
      tryagain.locked = false; 
+  }
+  //treasure?
+  if (current != null) {
+    if (current.prize()) {
+      gameEnd = true;
+    }
+    /*if (current.getTrans() != -1) {
+      stage = current.getTrans();
+      trans = false;
+    }
+    
+    if (current.getI() == 14 && current.getJ() == 0) {
+      for (int e = 0; e < enemies.size(); e++) {
+        enemies.get(e).die();
+        enemies.remove(e);
+        deadEnemy++;
+        print(deadEnemy);
+      }
+    }*/
   }
 }
 
@@ -630,4 +658,25 @@ public Tile randomSet(Character c, ArrayList<Tile> t, int a) {
   
   return o.get ((int) random (o.size()));
 }
+
+public void transition (int a) {
+    if (a == 0) {
+      map [7][0].trans(1);
+      map [14][7].trans(2);
+      map [7][14].trans(3);
+      map [0][7].trans(4);
+    }
+     if (a == 1) {
+      map [7][14].trans(0);
+   }
+  if (a == 2) {
+      map [0][7].trans(0);
+    }
+    if (a == 3) {
+      map [7][0].trans(0);
+      }
+      if (a == 4) {
+        map [7][7].treasure();  
+        }
+      }
 

@@ -13,6 +13,7 @@ public class Tile{
    //color
    private int c = color (63, 191, 95);
    //private color tcolor = #FFFFFF;
+   private PImage tr;
    
    //states
    private boolean current;
@@ -21,6 +22,10 @@ public class Tile{
    private Character currentChar = null;
    private boolean currentMove = false;
    //private boolean action = false;
+   
+   //special
+   private boolean treasure = false;
+   private int trans = -1;
    
    //terrain
    private boolean mountain = false;
@@ -99,6 +104,20 @@ public class Tile{
      action = false;
    }*/
    
+   //special
+   public void treasure() {
+     treasure = true;
+   }
+   public boolean prize() {
+     return treasure;
+   }
+   public void trans(int n) {
+     trans = n;
+   }
+   public int getTrans() {
+     return trans;
+   }
+   
    //terrain
    public void mountain() {
      mountain = true;
@@ -152,6 +171,10 @@ this.changeOn();
      }
      else if (bridge) {
      }
+     
+     else if (trans != -1) {
+       c = 0;
+     }
      else if (currentMove) {
        c = color (0, 186, 225);
      }
@@ -159,9 +182,14 @@ this.changeOn();
        this.changeOff();
        current = false;
      }
+     
      stroke (color(32, 135, 58));
      fill (c);
      rect (x, y, w, h);
+     if (treasure) {
+       tr = loadImage ("treasure.png");
+       image(tr, x, y);
+     }
    }
    
    //toString
