@@ -19,7 +19,13 @@ public class Tile{
    private boolean occupied = false;
    private boolean linked = false;
    private Character currentChar = null;
+   private boolean currentMove = false;
    //private boolean action = false;
+   
+   //terrain
+   private boolean mountain = false;
+   private boolean water = false;
+   private boolean bridge = false;
    
    //constructor
    public Tile (float x, float y, float w, float h, int i, int j) {
@@ -69,6 +75,13 @@ public class Tile{
    public void deoccupy() {
      occupied = false;
      currentChar = null;
+     currentMove = false;
+   }
+   public void currently() {
+     currentMove = true;
+   }
+   public void notCurrently() {
+     currentMove = false;
    }
    public void linkify() {
      linked = true;
@@ -85,6 +98,18 @@ public class Tile{
    public void deaction() {
      action = false;
    }*/
+   
+   //terrain
+   public void mountain() {
+     mountain = true;
+   }
+   public void water() {
+     water = true;
+   }
+   public void bridge() {
+     bridge = true;
+   }
+   
    
    //color
    public void changeOn() {
@@ -120,7 +145,16 @@ this.changeOn();
        c = color (36, 242, 180);
        current = false;
      }
-     
+     else if (mountain) {
+       //triangle shape
+     }
+     else if (water) {
+     }
+     else if (bridge) {
+     }
+     else if (currentMove) {
+       c = color (242, 36, 215);
+     }
      else {
        this.changeOff();
        current = false;
