@@ -20,11 +20,11 @@ No apparent bugs when playing.
 
 IMPROVEMENTS
 -------
--terrain
--joint/extended maps (actually 'searching' for treasure)
--more difficult enemy A.I. behavior
--different classes and attacks for enemies and players
--slow down movement of individual characters 
+- terrain
+- joint/extended maps (actually 'searching' for treasure)
+- more difficult enemy A.I. behavior
+- different classes and attacks for enemies and players
+- slow down movement of individual characters 
 
 
 _______
