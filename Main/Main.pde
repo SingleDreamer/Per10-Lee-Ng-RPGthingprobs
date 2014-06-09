@@ -102,6 +102,7 @@ void draw() {
     b.linkify();
   }
   
+  currentChar.getLocation().currently();
   
   //button
   move.display();
@@ -225,7 +226,6 @@ void draw() {
     //}
     attackLink();
     }
-
  
 }
 
@@ -322,7 +322,7 @@ public void endTurnAction(){
    } else{
      n = n + 1;
    }
-   //currentChar.getLocation().deaction();
+   currentChar.getLocation().notCurrently();
    currentChar = turnOrder.get(n);
 }
 
@@ -393,17 +393,17 @@ public void attackLink(){
           }
       }
 }
-/*
+
 public int range(Character a, Character b) {
-   int x1 = a.getX();
-   int y1 = a.getY();
-   int x2 = b.getX();
-   int y2 = b.getY();
+   int x1 = a.getLocation().getI();
+   int y1 = a.getLocation().getJ();
+   int x2 = b.getLocation().getI();
+   int y2 = b.getLocation().getJ();
    int x = x1 - x2;
    int y = y1 - y2;
-   return sqrt ( sq(x) + sq (y) );
+   return (int) sqrt ( sq(x) + sq (y) );
 }
-
+/*
 public Character closest(Character n) {
   Character x = player.get(0);
   for (int i = 1; i < players.size(); i++) {

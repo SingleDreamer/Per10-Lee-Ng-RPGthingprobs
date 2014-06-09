@@ -19,6 +19,7 @@ public class Tile{
    private boolean occupied = false;
    private boolean linked = false;
    private Character currentChar = null;
+   private boolean currentMove = false;
    //private boolean action = false;
    
    //terrain
@@ -74,6 +75,13 @@ public class Tile{
    public void deoccupy() {
      occupied = false;
      currentChar = null;
+     currentMove = false;
+   }
+   public void currently() {
+     currentMove = true;
+   }
+   public void notCurrently() {
+     currentMove = false;
    }
    public void linkify() {
      linked = true;
@@ -144,7 +152,9 @@ this.changeOn();
      }
      else if (bridge) {
      }
-     
+     else if (currentMove) {
+       c = color (242, 36, 215);
+     }
      else {
        this.changeOff();
        current = false;
