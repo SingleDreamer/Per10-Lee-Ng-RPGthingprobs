@@ -21,6 +21,11 @@ public class Tile{
    private Character currentChar = null;
    //private boolean action = false;
    
+   //terrain
+   private boolean mountain = false;
+   private boolean water = false;
+   private boolean bridge = false;
+   
    //constructor
    public Tile (float x, float y, float w, float h, int i, int j) {
       this.x = x;
@@ -87,9 +92,16 @@ public class Tile{
    }*/
    
    //terrain
-   private boolean mountain = false;
-   private boolean water = false;
-   private boolean bridge = false;
+   public void mountain() {
+     mountain = true;
+   }
+   public void water() {
+     water = true;
+   }
+   public void bridge() {
+     bridge = true;
+   }
+   
    
    //color
    public void changeOn() {

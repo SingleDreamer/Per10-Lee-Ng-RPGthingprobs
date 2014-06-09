@@ -154,6 +154,7 @@ void draw() {
          for (int e = 0; e < enemies.size(); e++){
             if (enemies.get(e).equals(chara)){
                enemies.get(e).die();
+               enemies.remove(chara);
             }
          } 
       }
@@ -161,45 +162,53 @@ void draw() {
          for (int p = 0; p < players.size(); p++){
             if (players.get(p).equals(chara)){
                players.get(p).die();
+               players.remove(chara);
             } 
          }
       }
     } 
   }
   
-  //ai
-  if (currentChar instanceof Enemy){
-    //ai attack
-    boolean attacking = false;
-    Random raw = new Random();
-    attackLink();
-    ArrayList<Character> targets = new ArrayList<Character>();
-    for (Tile a: alinks){
-      if (a.getChar() != null){
-         print(a.getChar());
-         if (a.getChar() instanceof Player){
-            targets.add(a.getChar()); 
-         }
-      } 
+  //AI
+  if (players.size() != 0) {
+    if (currentChar instanceof Enemy){
+      //ai attack
+      boolean attacking = false;
+      Random raw = new Random();
+      attackLink();
+      ArrayList<Character> targets = new ArrayList<Character>();
+      for (Tile a: alinks){
+        if (a.getChar() != null){
+           print(a.getChar());
+           if (a.getChar() instanceof Player){
+              targets.add(a.getChar()); 
+           }
+        } 
+      }
+      //choosing target
+      if (targets.size() > 0){
+        int attacktarget = raw.nextInt(targets.size());
+        currentChar.attack(targets.get(attacktarget));
+        attacking = true;
+      }
+      clearLink();
+      
+      //AI movement
+      if (!attacking){
+        moveLink();
+        int moveloc = currentChar.getMoveRange() + raw.nextInt(currentChar.getMoveRange()*3);
+        Tile newloc = links.get(moveloc);
+        while (newloc.occupied()) {
+          moveloc = currentChar.getMoveRange() + raw.nextInt(currentChar.getMoveRange()*3);
+          newloc = links.get(moveloc);
+        }
+        currentChar.move(newloc);
+        newloc.setChar(currentChar);
+        clearLink();
+      }
+      endTurnAction();
+      //print(newloc);
     }
-    if (targets.size() > 0){
-      int attacktarget = raw.nextInt(targets.size());
-      currentChar.attack(targets.get(attacktarget));
-      attacking = true;
-    }
-    clearLink();
-    //ai movement
-    if (!attacking){
-    moveLink();
-    int moveloc = currentChar.getMoveRange() + raw.nextInt(currentChar.getMoveRange()*3);
-    Tile newloc = links.get(moveloc);
-    if (newloc.occupied()){ moveloc++;}
-    currentChar.move(newloc);
-    newloc.setChar(currentChar);
-    clearLink();
-    }
-    endTurnAction();
-    //print(newloc);
   }
   
   //moving
@@ -216,13 +225,11 @@ void draw() {
     //}
     attackLink();
     }
+
  
 }
 
-
-//gamestuff, not in proper location
-//??????
-
+//ACTIONS
 void mousePressed(){
   //endturnbutton
   if (endTurn.overButton()){
@@ -269,6 +276,8 @@ void mouseReleased(){
  move.locked = false;
 }
 
+
+//COMMANDS
 public void attackAction(Character attacker){
     if (current.getCurrent()){
        if (current.occupied()){
@@ -384,3 +393,60 @@ public void attackLink(){
           }
       }
 }
+/*
+public int range(Character a, Character b) {
+   int x1 = a.getX();
+   int y1 = a.getY();
+   int x2 = b.getX();
+   int y2 = b.getY();
+   int x = x1 - x2;
+   int y = y1 - y2;
+   return sqrt ( sq(x) + sq (y) );
+}
+
+public Character closest(Character n) {
+  Character x = player.get(0);
+  for (int i = 1; i < players.size(); i++) {
+    if ( range (n, x) < range (n, players.get(i)) ) {
+      x = players.get (i);
+    }
+  }
+  return x;
+}
+
+public int findDirection (Character s, Character n) {
+  
+  
+
+public Tile randomSet(ArrayList<Tile> t, int a) {
+  if (a == 0) {
+  
+  }
+  if (a == 1) {
+    
+  }
+  if (a == 2) {
+  
+  }
+  if (a == 3) {
+    
+  }
+  
+  if (a == 4) {
+    
+  } 
+  
+  if (a == 5) {
+    
+  }
+  
+  if (a == 6) {
+    
+  }
+  
+  if (a == 7) {
+    
+  }
+    
+}
+*/
