@@ -7,6 +7,8 @@ private int cols = 15;
 private int rows = 15;
 private int n;
 private PFont f;
+
+//states
 private PImage backgroundimg;
 private PImage startScreen;
 private Button start;
@@ -91,9 +93,11 @@ void setup() {
     enemies.add(new Enemy("Bob"+(i+1), enemyimg));
     enemies.get(i).setLocation(i,0);
     turnOrder.add(enemies.get(i));
+    map [i][0].setChar (enemies.get(i));
     players.add(new Player("Aerith"+(i+1), playerimg));
     players.get(i).setLocation(14-i,14);
     turnOrder.add(players.get(i));
+    map [14-i][14].setChar(players.get(i));
   }
   
   Collections.sort(turnOrder);
@@ -142,7 +146,7 @@ void draw() {
   for (Tile b : alinks) {
     b.linkify();
   }
-  
+
   currentChar.getLocation().currently();
   
   //button
@@ -196,6 +200,7 @@ void draw() {
          for (int e = 0; e < enemies.size(); e++){
             if (enemies.get(e).equals(chara)){
                enemies.get(e).die();
+               enemies.remove(e);
                deadEnemy++;
             }
          } 
@@ -204,6 +209,7 @@ void draw() {
          for (int p = 0; p < players.size(); p++){
             if (players.get(p).equals(chara)){
                players.get(p).die();
+               players.remove(p);
                deadPlayer++;
             } 
          }
@@ -212,6 +218,8 @@ void draw() {
   }
   
   //AI
+   if (players.size() != 0) {
+
     if (currentChar instanceof Enemy){
       //ai attack
       boolean attacking = false;
@@ -237,18 +245,22 @@ void draw() {
       //AI movement
       if (!attacking){
         moveLink();
-        int moveloc = currentChar.getMoveRange() + raw.nextInt(currentChar.getMoveRange()*3);
-        Tile newloc = links.get(moveloc);
-        while (newloc.occupied()) {
-          moveloc = currentChar.getMoveRange() + raw.nextInt(currentChar.getMoveRange()*3);
-          newloc = links.get(moveloc);
-        }
+        //int moveloc = currentChar.getMoveRange() + raw.nextInt(currentChar.getMoveRange()*3);
+        //Tile newloc = links.get(moveloc);
+        Tile newloc = randomSet (currentChar, links, findDirection(currentChar, closest(currentChar)));
+        print (closest(currentChar));
+        print (randomSet (currentChar, links, findDirection(currentChar, closest(currentChar))));
+        //while (newloc.occupied()) {
+          //moveloc = currentChar.getMoveRange() + raw.nextInt(currentChar.getMoveRange()*3);
+          //newloc = links.get(moveloc);
+        //}
         currentChar.move(newloc);
         newloc.setChar(currentChar);
         clearLink();
       }
       endTurnAction();
     }
+   }
   
   
   //moving
@@ -267,7 +279,6 @@ void draw() {
   if (deadEnemy == 3){
      gameEnd = true; 
   }
-  
   }
 }
 
@@ -471,58 +482,152 @@ public Character closest(Character n) {
   }
   return x;
 }
-/*
+
 public int findDirection (Character s, Character n) {
+  
   int x1 = s.getLocation().getI();
   int y1 = s.getLocation().getJ();
   int x2 = n.getLocation().getI();
   int y2 = n.getLocation().getJ();
   int x = x2 - x1;
   int y = y2 - y1;
-  
+ 
   if (x == 0) {
     if (y > 0) {
-      return 2;
+      return 4;
     }
     else {
-      return 6;
+      return 0;
     }
   }
-  else if (
-  
-  return 0;
+  if (x > 0) {
+   if (y > 0) {
+    return 3;
+   }
+    else if (y < 0) {
+     return 1;
+    }
+   else {
+    return 2;
+   } 
+  }
+  if (x < 0) {
+    if (y > 0) {
+    return 5;
+   }
+    else if (y < 0) {
+     return 7;
+    }
+   else {
+    return 6;
+   } 
+  }
+  return -1;
 }
   
-/*
-public Tile randomSet(ArrayList<Tile> t, int a) {
-  if (a == 0) {
+
+public Tile randomSet(Character c, ArrayList<Tile> t, int a) {
   
+  Tile p = c.getLocation();
+  ArrayList<Tile> o = new ArrayList <Tile>();
+  o.add(p);
+  
+  if (a == 0) {
+    for (Tile n : t) {
+      if (!(n.occupied())) {
+      if (p.getI() == n.getI()) {
+        if (n.getJ() < p.getJ()) {
+          o.add(n);
+        }
+      }
+    }
+    }
   }
   if (a == 1) {
-    
+    for (Tile n : t) {
+            if (!(n.occupied())) {
+
+      if (p.getI() < n.getI()) {
+        if (n.getJ() < p.getJ()) {
+          o.add(n);
+        }
+      }
+            }
+          }
   }
   if (a == 2) {
-  
+    for (Tile n : t) {
+            if (!(n.occupied())) {
+
+      if (p.getJ() == n.getJ()) {
+        if (n.getI() > p.getI()) {
+          o.add(n);
+        }
+      }
+            }    }
   }
   if (a == 3) {
-    
+    for (Tile n : t) {
+            if (!(n.occupied())) {
+
+      if (p.getI() < n.getI()) {
+        if (n.getJ() > p.getJ()) {
+          o.add(n);
+        }
+      }
+            }
+          }
   }
   
   if (a == 4) {
-    
+    for (Tile n : t) {
+            if (!(n.occupied())) {
+
+      if (p.getI() == n.getI()) {
+        if (n.getJ() > p.getJ()) {
+          o.add(n);
+        }       }
+      }
+    }
   } 
   
   if (a == 5) {
-    
+    for (Tile n : t) {
+            if (!(n.occupied())) {
+
+      if (p.getI() > n.getI()) {
+        if (n.getJ() > p.getJ()) {
+          o.add(n);
+        }
+      }
+            }    }
   }
   
   if (a == 6) {
-    
+    for (Tile n : t) {
+            if (!(n.occupied())) {
+    if (p.getJ() == n.getJ()) {
+        if (n.getI() < p.getI()) {
+          o.add(n);
+        }
+      }
+            }
+          }
   }
   
   if (a == 7) {
-    
+    for (Tile n : t) {
+            if (!(n.occupied())) {
+
+      if (p.getI() > n.getI()) {
+        if (n.getJ() < p.getJ()) {
+          o.add(n);
+        }
+      }
+    }
   }
-    
+  }
+  
+  return o.get ((int) random (o.size()));
 }
-*/
+

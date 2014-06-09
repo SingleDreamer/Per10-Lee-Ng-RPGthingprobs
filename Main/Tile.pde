@@ -166,7 +166,7 @@ this.changeOn();
    
    //toString
    public String toString() {
-     return "("+x+", "+y+")";
+     return "("+i+", "+j+")";
    }
   
    /*public void display () {
