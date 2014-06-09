@@ -23,7 +23,7 @@ public class Character implements Comparable<Character>{
       defense = raw.nextInt(18) + 3;
       speed = raw.nextInt(18) + 3;
       health = raw.nextInt(20) + 30;
-      moverange = 3;
+      moverange = 4;
       attackrange = 1;
       isLow = false;
       location = map[0][0];
@@ -41,7 +41,7 @@ public class Character implements Comparable<Character>{
       defense = raw.nextInt(18) + 3;
       speed = raw.nextInt(18) + 3;
       health = raw.nextInt(20) + 30;
-      moverange = 3;
+      moverange = 4;
       attackrange = 1;
       isLow = false;
       location = map[0][0];
@@ -114,7 +114,7 @@ public class Character implements Comparable<Character>{
      if (other == null){
       print("nay"); 
      }else{
-     int damage = 5 + (this.getAttack() / other.getDefense());
+     int damage = 5 + (this.getAttack() * 2 / other.getDefense());
      other.setHealth(-1*damage);
      }
    }

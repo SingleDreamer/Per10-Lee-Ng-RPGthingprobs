@@ -6,12 +6,28 @@ public class Button {
   boolean locked;
   boolean pressed;
   PImage img;
+  int w;
+  int h;
+  boolean active;
 
   public Button (PImage image, int setx, int sety){
     x = setx;
     y = sety;
     locked = false;
     img = image;
+    w = 60;
+    h = 20;
+    active = true;
+  }
+  
+  public Button (PImage image, int setx, int sety, int wid, int hei){
+    x = setx;
+    y = sety;
+   locked = false;
+    img = image;
+    w = wid;
+   h = hei; 
+   active = false;
   }
   
   public void display (){
@@ -23,7 +39,7 @@ public class Button {
   
    public boolean pressedOn() {
     if (mousePressed){
-      if (((mouseX >= x) && (mouseX <= x+50)) && ((mouseY >= y) && (mouseY <= y + 20))) {
+      if (((mouseX >= x) && (mouseX <= x+w)) && ((mouseY >= y) && (mouseY <= y + h))) {
         return true;
       }
     }
@@ -31,7 +47,7 @@ public class Button {
   }
   
   public boolean overButton() {
-      return (((mouseX >= x) && (mouseX <= x+60)) && ((mouseY >= y) && (mouseY <= y + 20)));
+      return (((mouseX >= x) && (mouseX <= x+w)) && ((mouseY >= y) && (mouseY <= y + h)));
   }
   
   

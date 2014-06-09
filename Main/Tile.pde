@@ -153,7 +153,7 @@ this.changeOn();
      else if (bridge) {
      }
      else if (currentMove) {
-       c = color (242, 36, 215);
+       c = color (0, 186, 225);
      }
      else {
        this.changeOff();

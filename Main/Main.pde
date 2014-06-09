@@ -8,6 +8,16 @@ private int rows = 15;
 private int n;
 private PFont f;
 private PImage backgroundimg;
+private PImage startScreen;
+private Button start;
+private PImage startimg;
+private boolean gameStart;
+private boolean gameOver;
+private PImage gameOverScreen;
+private PImage tryagainimg;
+private Button tryagain;
+private boolean gameEnd;
+private PImage victoryimg;
 
 //buttons
 private Button move;
@@ -26,9 +36,26 @@ private ArrayList<Character> players;
 private PImage playerimg;
 private Character currentChar;
 private ArrayList<Character> turnOrder;
+private int deadEnemy;
+private int deadPlayer;
 
 //SETUP
 void setup() {
+  //pregame
+  startScreen = loadImage("startscreen.png");
+  gameStart = false;
+  gameEnd = false;
+  startimg = loadImage("start.png");
+  start = new Button(startimg, 330, 230);
+  deadEnemy = 0;
+  deadPlayer = 0;
+  
+  //postgame
+  gameOverScreen = loadImage("gameover.png");
+  gameOver = false;
+  tryagainimg = loadImage("tryagain.png");
+  tryagain = new Button(tryagainimg, 220, 230, 265, 48);
+  victoryimg = loadImage("victory.png");
   
   //board
   size (720, 376);
@@ -85,7 +112,21 @@ void setup() {
 
 //DRAW
 void draw() {
+  if (!gameStart){
+     image(startScreen, 0, 0); 
+     start.display();
+  }else if (gameStart && gameEnd && gameOver){
+     //game over, players died
+     image(gameOverScreen, 0, 0);
+     tryagain.display(); 
+     tryagain.active = true;
+  }else if (gameStart && gameEnd){
+     //game over, enemies died
+    image(victoryimg, 0, 0); 
+  }else if (gameStart && !gameEnd){
   //board
+  backgroundimg = loadImage("background.png");
+  image(backgroundimg, 0, 0);
   for (int i = 0; i < cols; i++) {
     for (int j = 0; j < rows; j++) {
       map[i][j].display();
@@ -155,7 +196,7 @@ void draw() {
          for (int e = 0; e < enemies.size(); e++){
             if (enemies.get(e).equals(chara)){
                enemies.get(e).die();
-               enemies.remove(chara);
+               deadEnemy++;
             }
          } 
       }
@@ -163,7 +204,7 @@ void draw() {
          for (int p = 0; p < players.size(); p++){
             if (players.get(p).equals(chara)){
                players.get(p).die();
-               players.remove(chara);
+               deadPlayer++;
             } 
          }
       }
@@ -171,7 +212,6 @@ void draw() {
   }
   
   //AI
-  if (players.size() != 0) {
     if (currentChar instanceof Enemy){
       //ai attack
       boolean attacking = false;
@@ -208,25 +248,27 @@ void draw() {
         clearLink();
       }
       endTurnAction();
-      //print(newloc);
     }
-  }
+  
   
   //moving
   if (move.pressed && !currentChar.moved()){
-   //if (current.getCurrent() && !(current.occupied())){
-     //links.add(current);
-    //}
     moveLink();
     }
   
  if (attack.pressed && !currentChar.attacked()){
-   //if (current.getCurrent() && !(current.occupied())){
-     //links.add(current);
-    //}
     attackLink();
     }
- 
+  
+  if (deadPlayer == 3){
+     gameEnd = true;
+     gameOver = true;
+  }
+  if (deadEnemy == 3){
+     gameEnd = true; 
+  }
+  
+  }
 }
 
 //ACTIONS
@@ -260,7 +302,6 @@ void mousePressed(){
    attack.pressed = true;
    move.pressed = false;
    print("attack");
-    
   }else{
    attack.locked = false;
   }
@@ -268,12 +309,29 @@ void mousePressed(){
    attackAction(currentChar); 
    clearLink();
   }
+  //startbutton
+  if (start.overButton()){
+    start.locked = true;
+    gameStart = true;
+    print("start");
+  }else{
+   start.locked = false; 
+  }
+  //tryagainbutton
+  if (tryagain.overButton() && tryagain.active){
+    tryagain.locked = true;
+    setup();
+  }else{
+     tryagain.locked = false; 
+  }
 }
 
 void mouseReleased(){
  endTurn.locked = false;
  attack.locked = false;
  move.locked = false;
+ start.locked = false;
+ tryagain.locked = false;
 }
 
 
