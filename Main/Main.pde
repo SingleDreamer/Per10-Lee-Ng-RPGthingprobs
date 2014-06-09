@@ -88,10 +88,10 @@ void setup() {
   turnOrder = new ArrayList<Character>();
   
   for (int i = 0; i < 3; i++){
-    enemies.add(new Enemy("Enemy"+(i+1), enemyimg));
+    enemies.add(new Enemy("Bob"+(i+1), enemyimg));
     enemies.get(i).setLocation(i,0);
     turnOrder.add(enemies.get(i));
-    players.add(new Player("Player"+(i+1), playerimg));
+    players.add(new Player("Aerith"+(i+1), playerimg));
     players.get(i).setLocation(14-i,14);
     turnOrder.add(players.get(i));
   }
@@ -461,21 +461,39 @@ public int range(Character a, Character b) {
    int y = y1 - y2;
    return (int) sqrt ( sq(x) + sq (y) );
 }
-/*
+
 public Character closest(Character n) {
-  Character x = player.get(0);
-  for (int i = 1; i < players.size(); i++) {
-    if ( range (n, x) < range (n, players.get(i)) ) {
+  Character x = players.get(0);
+  for (int i = 1; i > players.size(); i++) {
+    if ( range (n, x) > range (n, players.get(i)) ) {
       x = players.get (i);
     }
   }
   return x;
 }
-
+/*
 public int findDirection (Character s, Character n) {
+  int x1 = s.getLocation().getI();
+  int y1 = s.getLocation().getJ();
+  int x2 = n.getLocation().getI();
+  int y2 = n.getLocation().getJ();
+  int x = x2 - x1;
+  int y = y2 - y1;
   
+  if (x == 0) {
+    if (y > 0) {
+      return 2;
+    }
+    else {
+      return 6;
+    }
+  }
+  else if (
   
-
+  return 0;
+}
+  
+/*
 public Tile randomSet(ArrayList<Tile> t, int a) {
   if (a == 0) {
   
